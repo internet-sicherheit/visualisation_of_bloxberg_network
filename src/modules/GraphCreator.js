@@ -7,7 +7,11 @@ class GraphCreator extends React.Component {
     constructor(props) {
         super(props);
         console.log("Consturctor.")
-        this.data = new DataCollector().getData(props.address); // new DataCollector().getData("0x0d81b4b37EddC9C262198A82B51470aa1eBa14C4");  // 0x4945d63B509e137b0293Bd958cf97B61996c0fB9       // 0xC91a26a4351c6b351Cc2231e9c7bE7dd7D4a7036
+        this.data = new DataCollector().getData(props.address, props.mode); // new DataCollector().getData("0x0d81b4b37EddC9C262198A82B51470aa1eBa14C4");  // 0x4945d63B509e137b0293Bd958cf97B61996c0fB9       // 0xC91a26a4351c6b351Cc2231e9c7bE7dd7D4a7036
+    }
+
+    createNetwork() {
+        
     }
 
     createGraph() {
@@ -103,13 +107,23 @@ class GraphCreator extends React.Component {
 
     componentDidMount() {
         console.log("Component did mount.");
-        this.createGraph();
+        if(this.props.mode === "contract") {
+            this.createGraph();
+        } else {
+            this.createNetwork();
+        }
+        
     }
 
     componentWillUpdate(nextProps) {
         console.log("Component will update.");
-        this.data = new DataCollector().getData(nextProps.address);
-        this.createGraph();
+        this.data = new DataCollector().getData(nextProps.address, nextProps.mode);
+
+        if(this.props.mode === "contract") {
+            this.createGraph();
+        } else {
+            this.createNetwork();
+        }
     }
 
     render() {

@@ -6,17 +6,28 @@ class DataCollector extends React.Component {
         super(props);
     }
 
-    async getData(contractAddress) {
+    async getData(address, mode) {
 
         const Http = new XMLHttpRequest();
-        const url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=' + contractAddress;  
+        const url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=' + address;  
                                                                                                                                                    
         let transactions = await fetch(url).then(response => response.json());
 
-        return this.parseHTTPResponse(transactions.result);
+        let result = null;
+
+        switch(mode) {
+            case "contract":
+                result = this.parseHTTPResponseForContract(transactions.result);
+                break;
+            case "account":
+                result = this.parseHTTPResponseForNetwork(transactions.result);
+                break;
+        }
+
+        return result;
     }
 
-    parseHTTPResponse(response) {
+    parseHTTPResponseForContract(response) {
 
         let transactions = [];
 
@@ -60,6 +71,37 @@ class DataCollector extends React.Component {
                     }*/
 
         return transactions;
+    }
+
+    parseHTTPResponseForNetwork(response) {  // 0x97c314818fbe22b4b5d5Ea75E52E726271aFAE3b  
+        console.log("network vis");
+
+        let page = 2;
+        let offset = 80;
+
+        const Http = new XMLHttpRequest();
+        const url = 'https://blockexplorer.bloxberg.org/api/api?module=contract&action=listcontracts&page=' + page + '&offset=' + offset;  
+                                                                                                                                                   
+        let contracts = fetch(url).then(response => response.json());
+
+
+        contracts.then((promise) => {
+
+            let list = promise.result;
+            let contractList = [];
+
+            list.forEach(function(contract) {
+                contractList.push({contractAddress: contract.Address});
+            });
+
+            console.log("contractList");
+            console.log(contractList);
+
+
+        }).catch((err) => {
+            console.error(err);
+        });
+        
     }
 }
 
