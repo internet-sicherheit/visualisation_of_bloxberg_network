@@ -7,11 +7,8 @@ class GraphCreator extends React.Component {
     constructor(props) {
         super(props);
         console.log("Consturctor.")
-        this.data = new DataCollector().getData(props.address, props.mode); // new DataCollector().getData("0x0d81b4b37EddC9C262198A82B51470aa1eBa14C4");  // 0x4945d63B509e137b0293Bd958cf97B61996c0fB9       // 0xC91a26a4351c6b351Cc2231e9c7bE7dd7D4a7036
-    }
-
-    createNetwork() {
-        
+        console.log(props);
+        //this.data = new DataCollector().getData(props.page, props.offset); // new DataCollector().getData("0x0d81b4b37EddC9C262198A82B51470aa1eBa14C4");  // 0x4945d63B509e137b0293Bd958cf97B61996c0fB9       // 0xC91a26a4351c6b351Cc2231e9c7bE7dd7D4a7036
     }
 
     createGraph() {
@@ -107,27 +104,17 @@ class GraphCreator extends React.Component {
 
     componentDidMount() {
         console.log("Component did mount.");
-        if(this.props.mode === "contract") {
-            this.createGraph();
-        } else {
-            this.createNetwork();
-        }
-        
+        //this.createGraph();
     }
 
     componentWillUpdate(nextProps) {
         console.log("Component will update.");
-        this.data = new DataCollector().getData(nextProps.address, nextProps.mode);
-
-        if(this.props.mode === "contract") {
-            this.createGraph();
-        } else {
-            this.createNetwork();
-        }
+        console.log(nextProps);
+        //this.data = new DataCollector().getData(nextProps.page, nextProps.offset);
+        //this.createGraph();
     }
 
     render() {
-
         return (<div>
             <div id="info"></div>
             <div id="container"></div>

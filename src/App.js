@@ -5,36 +5,60 @@ import GraphCreator from './modules/GraphCreator';
 class App extends Component {
 
   state = {
-    address: null,
-    mode: "account"
+    page: 0,
+    offset: 0
   };
-
 
   render() {
 
-    const graph = (this.state.address !== null) ? <GraphCreator address={this.state.address} mode={this.state.mode} /> : null;
+    let graph = (this.state.page !== 0) ? <GraphCreator page={this.state.page} offset={this.state.offset} /> : null;
+
+    const maxPage = 100;
+    const maxOffset = 1800;
+
+    const pageSelectedValue = 1;
+    const offsetSelectedValue = 3;
+
+    const pageSelectOptions = [];
+    for(let i = 1; i <= maxPage; i++) {
+      if(i === pageSelectedValue) {
+        pageSelectOptions.push(<option key={i} value={i} selected>{i}</option>);
+      } else {
+        pageSelectOptions.push(<option key={i} value={i}>{i}</option>);
+      }
+    }
+
+    const offsetSelectOptions = [];
+    for(let i = 1; i <= maxOffset; i++) {
+      if(i === offsetSelectedValue) {
+        offsetSelectOptions.push(<option key={i} value={i} selected>{i}</option>);
+      } else {
+        offsetSelectOptions.push(<option key={i} value={i}>{i}</option>);
+      }
+    }
 
     return (
       <div className="App">
         <h1 className="title">Visualisation of Bloxsberg-Network</h1>
         <div id="input">
-          <input type="checkbox" id="checkbox" /><label>contract?</label>
-          <input type="text" id="address" placeholder="Address..." /><input type="submit" id="button" value="Submit" onClick={() => {
+          <label>Page:</label>
+          <select id="page_selection">
+            {pageSelectOptions}
+          </select>
+          <label>Offset:</label>
+          <select id="offset_selection">
+            {offsetSelectOptions}
+          </select>
+          <input type="submit" id="button" value="Start" onClick={() => {
 
-            let addr = document.getElementById("address").value;
+            let page = document.getElementById("page_selection").value;
+            let offset = document.getElementById("offset_selection").value;
+
+            console.log("page -> " + page);
+            console.log("offset -> " + offset);
+
+            this.setState({ page: page, offset: offset});
             
-            if (addr === "") {
-              alert("Enter an Address first.");
-            } else if (!addr.match("^0x([A-Fa-f0-9]{40})$")) {
-              alert("Your input is not an address.");
-            } else {
-              if(document.getElementById("checkbox").checked) {
-                this.setState({ address: addr, mode: "contract"});
-              } else {
-                this.setState({ address: addr, mode: "account"});
-              }
-            }
-
           }} />
         </div>
         <div id="graph_box">

@@ -3,11 +3,15 @@
     background-color: white;
 }
 
-#address {
+label {
+    margin: 20px;
+}
+seldect {
     background-color: white;
     color: gray;
 
-    width: 650px;
+    width: 100px;
+    height: 30px;
 
     margin-right: 10px;
     padding: 7px;
@@ -21,7 +25,7 @@
 
     box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
 }
-#address:focus {
+sedlect:focus {
     outline: none;
 }
 
