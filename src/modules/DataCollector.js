@@ -77,7 +77,7 @@ class DataCollector extends React.Component {
         console.log("network vis");
 
         let page = 2;
-        let offset = 80;
+        let offset = 100;
 
         const Http = new XMLHttpRequest();
         const url = 'https://blockexplorer.bloxberg.org/api/api?module=contract&action=listcontracts&page=' + page + '&offset=' + offset;  
