@@ -4,19 +4,26 @@
 }
 
 label {
-    margin: 20px;
+    
+    color: gray;
+
+    font-size: 12pt;
+    font-weight: 600;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    
 }
-seldect {
+select {
     background-color: white;
     color: gray;
 
-    width: 100px;
+    width: 90px;
     height: 30px;
 
-    margin-right: 10px;
-    padding: 7px;
+    margin: 20px;
+    padding: 3px;
 
-    font-size: 16pt;
+    font-size: 12pt;
     font-weight: 600;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
@@ -25,18 +32,20 @@ seldect {
 
     box-shadow: 5px 5px rgba(0, 0, 0, 0.5);
 }
-sedlect:focus {
+select:focus {
     outline: none;
 }
 
 #button {
-    background-color: white;
-    color: black;
     
-    height: 40px;
+    background-color: white;
+    color: gray;
+    
+    width: 100px;
+    height: 30px;
 
-    font-size: 16pt;
-    font-weight: 400;
+    font-size: 12pt;
+    font-weight: 600;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
     border: 1px solid black;
