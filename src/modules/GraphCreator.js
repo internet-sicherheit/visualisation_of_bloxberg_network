@@ -131,7 +131,11 @@ class GraphCreator extends React.Component {
                     .links(links) //add links
                     .on("tick", tick) //what to do
                     .linkDistance(300) //set for proper svg size
-                    
+                    .charge(function (d) {
+                        var charge = -200;
+                        if (d.index === 0) charge = 2.5 * charge;
+                        return charge;
+                    })
                     .start(); //kick the party off!
 
                 // add the links
