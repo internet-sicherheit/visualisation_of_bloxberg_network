@@ -8,7 +8,7 @@ class GraphCreator extends React.Component {
         super(props);
         console.log("Consturctor.")
         console.log(props);
-        this.data = new DataCollector().getData(props.page, props.offset, props.stage); // new DataCollector().getData("0x0d81b4b37EddC9C262198A82B51470aa1eBa14C4");  // 0x4945d63B509e137b0293Bd958cf97B61996c0fB9       // 0xC91a26a4351c6b351Cc2231e9c7bE7dd7D4a7036
+        this.data = null; // new DataCollector().getData("0x0d81b4b37EddC9C262198A82B51470aa1eBa14C4");  // 0x4945d63B509e137b0293Bd958cf97B61996c0fB9       // 0xC91a26a4351c6b351Cc2231e9c7bE7dd7D4a7036
 
         console.log("data");
         console.log(this.data);
@@ -23,8 +23,8 @@ class GraphCreator extends React.Component {
 
                 //console.log(promise);
 
-                let height = 800,
-                    width = 800;
+                let height = 1080,
+                    width = 1920;
 
                 let links = promise;
 
@@ -130,7 +130,7 @@ class GraphCreator extends React.Component {
                     .nodes(d3.values(nodes)) //add nodes
                     .links(links) //add links
                     .on("tick", tick) //what to do
-                    .linkDistance(200) //set for proper svg size
+                    .linkDistance(300) //set for proper svg size
                     
                     .start(); //kick the party off!
 
@@ -150,7 +150,7 @@ class GraphCreator extends React.Component {
                         }
                     })
                     .attr('class', 'node')
-                    .attr('r', width * 0.02) //radius of circle
+                    .attr('r', width * 0.005) //radius of circle
                     .on("click", function (d) {
                         console.log(d.source);
                         document.getElementById("info").innerHTML = d.source;
@@ -178,6 +178,11 @@ class GraphCreator extends React.Component {
         }
     }
 
+    componentWillMount() {
+        console.log("Component will mount.");
+        this.data = new DataCollector().getData(this.props.page, this.props.offset, this.props.stage);
+    }
+
     componentDidMount() {
         console.log("Component did mount.");
         this.createGraph();
@@ -185,9 +190,7 @@ class GraphCreator extends React.Component {
 
     componentWillUpdate(nextProps) {
         console.log("Component will update.");
-        //console.log(nextProps);
-        //this.data = new DataCollector().getContractList(nextProps.page, nextProps.offset, nextProps.stage);
-        //console.log(this.data);
+        //this.data = new DataCollector().getData(nextProps.page, nextProps.offset, nextProps.stage);
         this.createGraph();
     }
 

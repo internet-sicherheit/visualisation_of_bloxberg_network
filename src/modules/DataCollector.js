@@ -1,3 +1,4 @@
+import { transition } from 'd3';
 import React from 'react';
 
 class DataCollector extends React.Component {
@@ -17,21 +18,6 @@ class DataCollector extends React.Component {
         let transactionList = await this.getTransactionFromContractList(contractList, stage);
         console.log("Get transactionlist from contractlist:");
         console.log(transactionList);
-
-
-        let a = [];
-
-
-        let b = [
-            {source: "e", target: "b"},
-            {source: "f", target: "b"},
-            {source: "g", target: "b"},
-            {source: "h", target: "b"},
-        ]
-
-        Array.prototype.push.apply(a,b)
-
-        console.log(a);
 
         return transactionList;
 
@@ -63,7 +49,7 @@ class DataCollector extends React.Component {
 
     async getTransactionFromContractList(response) {  // 0x97c314818fbe22b4b5d5Ea75E52E726271aFAE3b  
 
-        let transactionList = [];
+        let transactions = [];
 
         response.forEach(async function (contract) {
             let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
@@ -71,7 +57,7 @@ class DataCollector extends React.Component {
             url = url + contract.Address;
 
             let arrays = await fetch(url).then(response => response.json());
-            let transactions = [];
+            //let transactions = [];
 
             let length = Object.keys(arrays.result).length;
             let array = arrays.result;
@@ -96,10 +82,15 @@ class DataCollector extends React.Component {
                 }
 
             }
-            Array.prototype.push.apply(transactionList, transactions);
+            //Array.prototype.push.apply(transactionList, transactions);
             //transactionList.push(transactions);
+            console.log(transactions);
         });
-        return transactionList;
+
+        //console.log("transactions");
+        //console.log(transactions);
+
+        return transactions;
     }
 
     parseHTTPResponse(response) {
