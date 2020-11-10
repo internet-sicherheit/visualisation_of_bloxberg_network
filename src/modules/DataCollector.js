@@ -10,12 +10,12 @@ class DataCollector extends React.Component {
     async getData(page, offset, stage) {
 
         // get contract list
-        let contractList = await this.getContractList(page, offset, stage);
+        let contractList = await this.getContractList(page, offset);
         console.log("Get contractlist:");
         console.log(contractList);
 
         // get transactions from contract list
-        let transactionList = await this.getTransactionFromContractList(contractList, stage);
+        let transactionList = await this.getTransactionFromContractList(contractList);
         console.log("Get transactionlist from contractlist:");
         console.log(transactionList);
 
@@ -47,16 +47,16 @@ class DataCollector extends React.Component {
         return null;
     }
 
-    async getTransactionFromContractList(response) {  // 0x97c314818fbe22b4b5d5Ea75E52E726271aFAE3b  
+    async getTransactionFromContractList(contractList) {  // 0x97c314818fbe22b4b5d5Ea75E52E726271aFAE3b  
 
         let transactions = [];
 
-        for(const contract of response) {
+        for(const contract of contractList) {
             let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
             //console.log("ContractAddress: " + contract.Address);
             url = url + contract.Address;
 
-            let arrays = await fetch(url).then(response => response.json());
+            let arrays = await fetch(url).then(contractList => contractList.json());
             //let transactions = [];
 
             let length = Object.keys(arrays.result).length;
@@ -65,7 +65,7 @@ class DataCollector extends React.Component {
             for (let i = 0; i < length; i++) {
 
                 if (transactions.length === 0) {
-                    transactions.push({ source: array[i].from, target: array[i].to });
+                    transactions.push({ source: array[i].from, target: array[i].to, type: "contract" });
 
                 }
 
@@ -78,7 +78,7 @@ class DataCollector extends React.Component {
 
                 }
                 if (found === 0 && array[i].to !== "") {
-                    transactions.push({ source: array[i].from, target: array[i].to });
+                    transactions.push({ source: array[i].from, target: array[i].to, type: "contract" });
                 }
 
             }
