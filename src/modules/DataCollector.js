@@ -51,7 +51,7 @@ class DataCollector extends React.Component {
 
         let transactions = [];
 
-        response.forEach(async function (contract) {
+        for(const contract of response) {
             let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
             //console.log("ContractAddress: " + contract.Address);
             url = url + contract.Address;
@@ -85,7 +85,7 @@ class DataCollector extends React.Component {
             //Array.prototype.push.apply(transactionList, transactions);
             //transactionList.push(transactions);
             console.log(transactions);
-        });
+        }
 
         //console.log("transactions");
         //console.log(transactions);
