@@ -1,5 +1,6 @@
 {
   "name": "my-app",
+  "homepage": "https://github.com/internet-sicherheit/visualisation_of_bloxberg_network",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

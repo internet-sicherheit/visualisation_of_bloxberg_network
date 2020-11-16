@@ -121,22 +121,43 @@ class GraphCreator extends React.Component {
         console.log("graph drawed.");
     }
 
+    showLoader() {
+        document.getElementById("container").style.visibility='hidden';
+        document.getElementById("loader").style.visibility='visable';
+        document.getElementById("loader").style.height="100px";
+        document.getElementById("loader").style.width="100px";
+    }
+
+    hideLoader() {
+        document.getElementById("container").style.visibility='visable';
+        document.getElementById("loader").style.visibility='hidden';
+        document.getElementById("loader").style.height="0px";
+        document.getElementById("loader").style.width="0px";
+    }
+
     componentWillMount() {
         console.log("Component will mount.");
     }
 
     componentDidMount() {
         console.log("Component did mount.");
+        //this.showLoader();
         this.responseObject.getData(this.props.page, this.props.offset, this.props.stage).then((promise) => {
+            //this.hideLoader();
             this.createGraph(promise);
         });
     }
 
     componentWillUpdate(nextProps) {
         console.log("Component will update.");
+        //this.showLoader();
         this.responseObject.getData(nextProps.page, nextProps.offset, nextProps.stage).then((promise) => {
             this.createGraph(promise);
         });
+    }
+
+    componentDidUpdate() {
+        //this.hideLoader();
     }
 
     render() {
