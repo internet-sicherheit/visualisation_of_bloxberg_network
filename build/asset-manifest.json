@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/my-app/static/css/main.3f5e5c3f.chunk.css",
-    "main.js": "/my-app/static/js/main.916efb8e.chunk.js",
-    "main.js.map": "/my-app/static/js/main.916efb8e.chunk.js.map",
-    "runtime-main.js": "/my-app/static/js/runtime-main.58a6d01e.js",
-    "runtime-main.js.map": "/my-app/static/js/runtime-main.58a6d01e.js.map",
-    "static/js/2.bb40503c.chunk.js": "/my-app/static/js/2.bb40503c.chunk.js",
-    "static/js/2.bb40503c.chunk.js.map": "/my-app/static/js/2.bb40503c.chunk.js.map",
-    "index.html": "/my-app/index.html",
-    "precache-manifest.e099690080eb0398875dc4839eda0040.js": "/my-app/precache-manifest.e099690080eb0398875dc4839eda0040.js",
-    "service-worker.js": "/my-app/service-worker.js",
-    "static/css/main.3f5e5c3f.chunk.css.map": "/my-app/static/css/main.3f5e5c3f.chunk.css.map",
-    "static/js/2.bb40503c.chunk.js.LICENSE.txt": "/my-app/static/js/2.bb40503c.chunk.js.LICENSE.txt"
+    "main.css": "/internet-sicherheit/visualisation_of_bloxberg_network/static/css/main.3f5e5c3f.chunk.css",
+    "main.js": "/internet-sicherheit/visualisation_of_bloxberg_network/static/js/main.192fb72a.chunk.js",
+    "main.js.map": "/internet-sicherheit/visualisation_of_bloxberg_network/static/js/main.192fb72a.chunk.js.map",
+    "runtime-main.js": "/internet-sicherheit/visualisation_of_bloxberg_network/static/js/runtime-main.122055bc.js",
+    "runtime-main.js.map": "/internet-sicherheit/visualisation_of_bloxberg_network/static/js/runtime-main.122055bc.js.map",
+    "static/js/2.bb40503c.chunk.js": "/internet-sicherheit/visualisation_of_bloxberg_network/static/js/2.bb40503c.chunk.js",
+    "static/js/2.bb40503c.chunk.js.map": "/internet-sicherheit/visualisation_of_bloxberg_network/static/js/2.bb40503c.chunk.js.map",
+    "index.html": "/internet-sicherheit/visualisation_of_bloxberg_network/index.html",
+    "precache-manifest.842a9fb8922fd8b4abfcf4f7b08eb867.js": "/internet-sicherheit/visualisation_of_bloxberg_network/precache-manifest.842a9fb8922fd8b4abfcf4f7b08eb867.js",
+    "service-worker.js": "/internet-sicherheit/visualisation_of_bloxberg_network/service-worker.js",
+    "static/css/main.3f5e5c3f.chunk.css.map": "/internet-sicherheit/visualisation_of_bloxberg_network/static/css/main.3f5e5c3f.chunk.css.map",
+    "static/js/2.bb40503c.chunk.js.LICENSE.txt": "/internet-sicherheit/visualisation_of_bloxberg_network/static/js/2.bb40503c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.58a6d01e.js",
+    "static/js/runtime-main.122055bc.js",
     "static/js/2.bb40503c.chunk.js",
     "static/css/main.3f5e5c3f.chunk.css",
-    "static/js/main.916efb8e.chunk.js"
+    "static/js/main.192fb72a.chunk.js"
   ]
 }
