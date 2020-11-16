@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/internet-sicherheit/visualisation_of_bloxberg_network/precache-manifest.842a9fb8922fd8b4abfcf4f7b08eb867.js"
+  "/internet-sicherheit/visualisation_of_bloxberg_network/tree/gh-pages/precache-manifest.c2438ef57ca5cc799f38127d75422591.js"
 );
 
 self.addEventListener('message', (event) => {
@@ -33,7 +33,7 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/internet-sicherheit/visualisation_of_bloxberg_network/index.html"), {
+workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/internet-sicherheit/visualisation_of_bloxberg_network/tree/gh-pages/index.html"), {
   
   blacklist: [/^\/_/,/\/[^/?]+\.[^/]+$/],
 });
