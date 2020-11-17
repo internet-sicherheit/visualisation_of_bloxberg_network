@@ -51,6 +51,7 @@ class DataCollector extends React.Component {
 
         let transactions = [];
 
+        let counter = 0;
         for(const contract of contractList) {
             let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
             //console.log("ContractAddress: " + contract.Address);
@@ -82,9 +83,15 @@ class DataCollector extends React.Component {
                 }
 
             }
+
+            counter++;
             //Array.prototype.push.apply(transactionList, transactions);
             //transactionList.push(transactions);
             console.log(transactions);
+
+            let p = Math.round( counter * 100 /  contractList.length );
+            document.getElementById("progress").innerHTML = p + "%";
+            document.getElementById("progress").style.width = p + "%";
         }
 
         //console.log("transactions");

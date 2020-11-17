@@ -1,3 +1,7 @@
+body {
+    align-items: center;
+}
+
 /* searchbar */
 #input {
     background-color: white;
@@ -64,6 +68,33 @@ select:focus {
     outline: none;
 }
 
+/* Progressbar */
+#progressbar{
+    background-color: lightgray;
+
+    height: 30px;
+    width: 500px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+#progress{
+    background-color: gray;
+
+    height: 100%;
+    width: 0%;
+
+    color: white;
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-size: 12pt;
+    font-weight: 400;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 /* Node information */
 #info {
     background-color: white;
@@ -96,22 +127,3 @@ select:focus {
 
 }
 
-.App-logo {
-    /*height: 20vmin;*/
-    pointer-events: none;
-  }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 5s linear;
-    }
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }

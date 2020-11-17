@@ -98,9 +98,9 @@ class GraphCreator extends React.Component {
             .attr('r', width * 0.005) //radius of circle
             .on("click", function (d) {
                 if (typeof d.source === "undefined") {
-                    document.getElementById("info").innerHTML = d.target;
+                    document.getElementById("info").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a>";
                 } else {
-                    document.getElementById("info").innerHTML = d.source;
+                    document.getElementById("info").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a>";
                 }
 
             });
@@ -122,17 +122,15 @@ class GraphCreator extends React.Component {
     }
 
     showLoader() {
-        document.getElementById("container").style.visibility='hidden';
-        document.getElementById("loader").style.visibility='visable';
-        document.getElementById("loader").style.height="100px";
-        document.getElementById("loader").style.width="100px";
+        document.getElementById("container").style.visibility = "hidden";
+        document.getElementById("progressbar").style.visibility = "visible";
     }
 
     hideLoader() {
-        document.getElementById("container").style.visibility='visable';
-        document.getElementById("loader").style.visibility='hidden';
-        document.getElementById("loader").style.height="0px";
-        document.getElementById("loader").style.width="0px";
+        document.getElementById("container").style.visibility = "visible";
+        document.getElementById("progressbar").style.visibility = "hidden";
+        document.getElementById("progress").style.width = "0%";
+        document.getElementById("progress").innerHTML = "0%";
     }
 
     componentWillMount() {
@@ -141,28 +139,32 @@ class GraphCreator extends React.Component {
 
     componentDidMount() {
         console.log("Component did mount.");
-        //this.showLoader();
+        this.showLoader();
         this.responseObject.getData(this.props.page, this.props.offset, this.props.stage).then((promise) => {
-            //this.hideLoader();
+            this.hideLoader();
             this.createGraph(promise);
         });
     }
 
     componentWillUpdate(nextProps) {
         console.log("Component will update.");
-        //this.showLoader();
+        this.showLoader();
         this.responseObject.getData(nextProps.page, nextProps.offset, nextProps.stage).then((promise) => {
+            this.hideLoader();
             this.createGraph(promise);
         });
     }
 
     componentDidUpdate() {
-        //this.hideLoader();
+        console.log("Component did update.");
     }
 
     render() {
         return (<div>
             <div id="info"></div>
+            <div id="progressbar">
+                <div id="progress"></div>
+            </div>
             <div id="container"></div>
         </div>
         );
