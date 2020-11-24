@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/visualisation_of_bloxberg_network/precache-manifest.45311269dc33e8fd795aceca083d2e3a.js"
+  "/visualisation_of_bloxberg_network/precache-manifest.6aaf09c41ea7b968cec6e51fcae323f6.js"
 );
 
 self.addEventListener('message', (event) => {
