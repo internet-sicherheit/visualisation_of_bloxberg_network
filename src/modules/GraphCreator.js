@@ -16,8 +16,12 @@ class GraphCreator extends React.Component {
 
     createGraph(promise) {
         console.log("create graph:");
-        let height = 1080,
-            width = 1920;
+
+        let graphBoxHeight = window.innerHeight - document.getElementById("address_information").offsetHeight;
+        document.getElementById("graph_box").style.height = graphBoxHeight + "px";
+
+        let height = graphBoxHeight;
+        let width = window.innerWidth ;
 
         let links = promise;
 
@@ -58,16 +62,23 @@ class GraphCreator extends React.Component {
 
         console.log(nodes);
 
+        //let svgWidth = width - 40;
+        let svgWidth = document.getElementById("address_information").offsetWidth - 2;
+        let svgHeight = height - 20;
+
+        //document.getElementById("address_information").style.width = svgWidth + "px";
+
         document.getElementById("container").innerHTML = "";
         // add a SVG to the body for our viz
         let svg = d3.select('#container').append('svg')
-            .attr('width', width)
-            .attr('height', height);
-
+            .attr('width', svgWidth)
+            .attr('height', svgHeight)
+            .call(d3.behavior.zoom().on("zoom", redraw))
+            .append("g");
 
         // use the force
         let force = d3.layout.force() //build the layout
-            .size([width, height]) //specified earlier
+            .size([svgWidth, svgHeight]) //specified earlier
             .nodes(d3.values(nodes)) //add nodes
             .links(links) //add links
             .on("tick", tick) //what to do
@@ -97,10 +108,11 @@ class GraphCreator extends React.Component {
             .attr('class', 'node')
             .attr('r', width * 0.005) //radius of circle
             .on("click", function (d) {
+                d3.event.stopImmediatePropagation();
                 if (typeof d.source === "undefined") {
-                    document.getElementById("info").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a>";
+                    document.getElementById("address_information").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a>";
                 } else {
-                    document.getElementById("info").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a>";
+                    document.getElementById("address_information").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a>";
                 }
 
             });
@@ -115,24 +127,45 @@ class GraphCreator extends React.Component {
                 .attr('y1', function (d) { return d.source.y; })
                 .attr('x2', function (d) { return d.target.x; })
                 .attr('y2', function (d) { return d.target.y; });
-
         }
+
+        function redraw() {
+            svg.attr("transform",
+                "translate(" + d3.event.translate + ")"
+                + " scale(" + d3.event.scale + ")");
+          } 
 
         console.log("graph drawed.");
     }
 
     showLoader() {
+        document.getElementById("address_information").innerHTML = "Select a node for node information.";
+        document.getElementById("address_information").style.visibility = "hidden";
         document.getElementById("container").style.visibility = "hidden";
-        document.getElementById("progressbar").style.visibility = "visible";
+        document.getElementById("loader").style.visibility = "visible";
     }
 
     hideLoader() {
+        document.getElementById("address_information").style.visibility = "visible";
         document.getElementById("container").style.visibility = "visible";
-        document.getElementById("progressbar").style.visibility = "hidden";
+        document.getElementById("loader").style.visibility = "hidden";
         document.getElementById("progress").style.width = "0%";
         document.getElementById("progress").innerHTML = "0%";
     }
 
+    scrollAnimation() {
+        document.getElementById("address_information").scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+            inline: "nearest"
+          });
+    }
+
+    widthResizeListener() {
+        window.onresize = function () {
+            document.getElementsByTagName("svg")[0].style.width = document.getElementById("address_information").offsetWidth - 2;
+        };
+    }
     componentWillMount() {
         console.log("Component will mount.");
     }
@@ -143,6 +176,9 @@ class GraphCreator extends React.Component {
         this.responseObject.getData(this.props.page, this.props.offset, this.props.stage).then((promise) => {
             this.hideLoader();
             this.createGraph(promise);
+
+            this.scrollAnimation();
+            this.widthResizeListener();
         });
     }
 
@@ -152,22 +188,21 @@ class GraphCreator extends React.Component {
         this.responseObject.getData(nextProps.page, nextProps.offset, nextProps.stage).then((promise) => {
             this.hideLoader();
             this.createGraph(promise);
+
+            this.scrollAnimation();
+            this.widthResizeListener();
         });
+
+        
     }
 
     componentDidUpdate() {
+        
         console.log("Component did update.");
     }
 
     render() {
-        return (<div>
-            <div id="info"></div>
-            <div id="progressbar">
-                <div id="progress"></div>
-            </div>
-            <div id="container"></div>
-        </div>
-        );
+        return (<div id="container"></div>);
     }
 }
 

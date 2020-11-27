@@ -89,7 +89,7 @@ class DataCollector extends React.Component {
             //transactionList.push(transactions);
             console.log(transactions);
 
-            let p = Math.round( counter * 100 /  contractList.length );
+            let p = Math.round( counter * 100 /  contractList.length * 100 ) / 100;
             document.getElementById("progress").innerHTML = p + "%";
             document.getElementById("progress").style.width = p + "%";
         }

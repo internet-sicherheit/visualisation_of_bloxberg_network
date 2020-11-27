@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import './App.css';
 import GraphCreator from './modules/GraphCreator';
 
@@ -37,8 +38,24 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h1 className="title">Visualisation of Bloxsberg-Network</h1>
-        <div id="input">
+        <div id="banner">
+          <h1 className="title">Visualisation of Bloxsberg-Network</h1>
+        </div>
+        <div id="site_informaiton">
+          <p>This website will produce a force directed d3 graph that will visualizise the Bloxberg Network by using the <a href="https://blockexplorer.bloxberg.org/api_docs">Bloxberg RPC API</a>.</p>
+        </div>
+        <div id="values_informaiton">
+          <p id="text">
+            <b>Page</b> represents the page number to be used for pagination.
+          </p>
+          <p id="text">
+            <b>Offset</b> represents the maximum number of records to return when paginating.
+          </p>
+          <p id="text">
+            <b>Stage</b> represents how deep the http requests will search into to network.
+          </p>
+        </div>
+        <div id="control">
           <label>Page:</label>
           <select id="page_selection" defaultValue={pageSelectedValue}>
             {pageSelectOptions}
@@ -64,6 +81,15 @@ class App extends Component {
             this.setState({ page: page, offset: offset, stage: stage});
             
           }} />
+        </div>
+        <div id="loader" style={{visibility: "visable"}}>
+          <div id="progressbar">
+            <div id="progress"></div>
+            <p>Loading...</p>
+          </div>
+        </div>
+        <div id="address_information">
+          Select a node for node information.
         </div>
         <div id="graph_box">
           {graph}

@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/visualisation_of_bloxberg_network/static/css/main.3f5e5c3f.chunk.css",
-    "main.js": "/visualisation_of_bloxberg_network/static/js/main.6e39a286.chunk.js",
-    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.6e39a286.chunk.js.map",
+    "main.css": "/visualisation_of_bloxberg_network/static/css/main.e04828da.chunk.css",
+    "main.js": "/visualisation_of_bloxberg_network/static/js/main.794e7d2e.chunk.js",
+    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.794e7d2e.chunk.js.map",
     "runtime-main.js": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js",
     "runtime-main.js.map": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js.map",
-    "static/js/2.bb40503c.chunk.js": "/visualisation_of_bloxberg_network/static/js/2.bb40503c.chunk.js",
-    "static/js/2.bb40503c.chunk.js.map": "/visualisation_of_bloxberg_network/static/js/2.bb40503c.chunk.js.map",
+    "static/js/2.1c684bae.chunk.js": "/visualisation_of_bloxberg_network/static/js/2.1c684bae.chunk.js",
+    "static/js/2.1c684bae.chunk.js.map": "/visualisation_of_bloxberg_network/static/js/2.1c684bae.chunk.js.map",
     "index.html": "/visualisation_of_bloxberg_network/index.html",
-    "precache-manifest.c4cfdfb86134ac6805ea68dc68ffae1f.js": "/visualisation_of_bloxberg_network/precache-manifest.c4cfdfb86134ac6805ea68dc68ffae1f.js",
+    "precache-manifest.6aaf09c41ea7b968cec6e51fcae323f6.js": "/visualisation_of_bloxberg_network/precache-manifest.6aaf09c41ea7b968cec6e51fcae323f6.js",
     "service-worker.js": "/visualisation_of_bloxberg_network/service-worker.js",
-    "static/css/main.3f5e5c3f.chunk.css.map": "/visualisation_of_bloxberg_network/static/css/main.3f5e5c3f.chunk.css.map",
-    "static/js/2.bb40503c.chunk.js.LICENSE.txt": "/visualisation_of_bloxberg_network/static/js/2.bb40503c.chunk.js.LICENSE.txt"
+    "static/css/main.e04828da.chunk.css.map": "/visualisation_of_bloxberg_network/static/css/main.e04828da.chunk.css.map",
+    "static/js/2.1c684bae.chunk.js.LICENSE.txt": "/visualisation_of_bloxberg_network/static/js/2.1c684bae.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d013d7be.js",
-    "static/js/2.bb40503c.chunk.js",
-    "static/css/main.3f5e5c3f.chunk.css",
-    "static/js/main.6e39a286.chunk.js"
+    "static/js/2.1c684bae.chunk.js",
+    "static/css/main.e04828da.chunk.css",
+    "static/js/main.794e7d2e.chunk.js"
   ]
 }
