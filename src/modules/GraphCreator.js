@@ -6,12 +6,13 @@ import DataCollector from './DataCollector';
 class GraphCreator extends React.Component {
 
     responseObject = null;
+    zoomEnable = true;
 
     constructor(props) {
         super(props);
         console.log("Consturctor.")
         console.log(props);
-        this.responseObject = new DataCollector(); // new DataCollector().getData("0x0d81b4b37EddC9C262198A82B51470aa1eBa14C4");  // 0x4945d63B509e137b0293Bd958cf97B61996c0fB9       // 0xC91a26a4351c6b351Cc2231e9c7bE7dd7D4a7036
+        this.responseObject = new DataCollector();
     }
 
     createGraph(promise) {
@@ -55,26 +56,27 @@ class GraphCreator extends React.Component {
         // compute nodes from links data
         links.forEach(function (link) {
             link.source = nodes[link.source] ||
-                (nodes[link.source] = { source: link.source });
+                (nodes[link.source] = { source: link.source, count: link.txcount });
             link.target = nodes[link.target] ||
                 (nodes[link.target] = { target: link.target, type: link.type });
         });
 
         console.log(nodes);
 
-        //let svgWidth = width - 40;
         let svgWidth = document.getElementById("address_information").offsetWidth - 2;
         let svgHeight = height - 20;
 
-        //document.getElementById("address_information").style.width = svgWidth + "px";
+        let zoom = d3.behavior.zoom().on("zoom", updateZoom);
 
         document.getElementById("container").innerHTML = "";
         // add a SVG to the body for our viz
         let svg = d3.select('#container').append('svg')
             .attr('width', svgWidth)
             .attr('height', svgHeight)
-            .call(d3.behavior.zoom().on("zoom", redraw))
+            .style("cursor","move")
+            .call(zoom)
             .append("g");
+
 
         // use the force
         let force = d3.layout.force() //build the layout
@@ -100,21 +102,40 @@ class GraphCreator extends React.Component {
         let node = svg.selectAll('.node')
             .data(force.nodes()) //add
             .enter().append('circle')
+            .style("cursor","auto")
             .style("fill", function (d) {
-                if (d.type === "contract") {
+                if (d.type === "Contract") {
                     return "orange";
                 }
             })
             .attr('class', 'node')
             .attr('r', width * 0.005) //radius of circle
             .on("click", function (d) {
-                d3.event.stopImmediatePropagation();
                 if (typeof d.source === "undefined") {
-                    document.getElementById("address_information").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a>";
+                    document.getElementById("address_information").innerHTML = 
+                      " <p class='labels'>Type:</p><p class='values'>" + d.type + "</p>"
+                    + " <p class='labels'>TXCount:</p><p class='values'>" + 0 + "</p>"
+                    + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a></p>"
                 } else {
-                    document.getElementById("address_information").innerHTML = "<a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a>";
+                    document.getElementById("address_information").innerHTML = 
+                      " <p class='labels'>Type:</p><p class='values'>" + "Account</p>"
+                    + " <p class='labels'>TXCount:</p><p class='values'>" + d.count + "</p>"
+                    + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a></p>";
                 }
-
+            })
+            .on("mousedown", function() {
+                d3Attributes();
+                this.zoomEnable = false;
+                console.log("ZoomEnabled? " + this.zoomEnable);
+                d3.select('#container').select('svg').call(d3.behavior.zoom().on("zoom", null));
+            })
+            .on("mouseup", function() {
+                this.zoomEnable = true;
+                console.log("ZoomEnabled? " + this.zoomEnable);
+                d3.select('#container').select('svg').call(zoom);
+            })
+            .on("focus", function() {
+                d3.select(this).style("border-color", "red"); // fehlerhaft
             });
 
         function tick(e) {
@@ -129,12 +150,17 @@ class GraphCreator extends React.Component {
                 .attr('y2', function (d) { return d.target.y; });
         }
 
-        function redraw() {
-            svg.attr("transform",
+        function updateZoom() {
+
+               svg.attr("transform",
                 "translate(" + d3.event.translate + ")"
                 + " scale(" + d3.event.scale + ")");
-          } 
+        }
 
+        function d3Attributes() {
+            console.log(document.getElementsByTagName("g")[0].getAttribute("transform"));
+        }
+    
         console.log("graph drawed.");
     }
 
@@ -158,7 +184,7 @@ class GraphCreator extends React.Component {
             behavior: "smooth",
             block: "start",
             inline: "nearest"
-          });
+        });
     }
 
     widthResizeListener() {
@@ -192,12 +218,9 @@ class GraphCreator extends React.Component {
             this.scrollAnimation();
             this.widthResizeListener();
         });
-
-        
     }
 
     componentDidUpdate() {
-        
         console.log("Component did update.");
     }
 

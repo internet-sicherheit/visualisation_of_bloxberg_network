@@ -1,6 +1,6 @@
 html {
     height: 100%;
-    overflow-x: hidden;
+    /*verflow-x: hidden;*/
 }
 
 body {
@@ -63,6 +63,11 @@ body {
 
     margin-left: 20px;
     margin-right: 20px;
+
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 
     visibility: hidden;
 }
@@ -164,6 +169,20 @@ select:focus {
 
     margin-left:10px;
 }
+
+/* address_information elements */
+.labels {
+    margin-right: 1%;
+    font-weight: 900;
+    color: rgb(126, 126, 126);
+    
+}
+.values {
+    font-weight: 500;
+    margin-right: 5%;
+    color: rgb(68, 68, 68);
+}
+
 
 /* Graph_box elements */
 .node {

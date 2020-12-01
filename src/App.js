@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
+import './modules/styles.css';
 import GraphCreator from './modules/GraphCreator';
 
 class App extends Component {
@@ -89,7 +90,7 @@ class App extends Component {
           </div>
         </div>
         <div id="address_information">
-          Select a node for node information.
+          <p class="labels">Select a node for node information.</p>
         </div>
         <div id="graph_box">
           {graph}

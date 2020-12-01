@@ -63,10 +63,13 @@ class DataCollector extends React.Component {
             let length = Object.keys(arrays.result).length;
             let array = arrays.result;
 
+            console.log("Array");
+            console.log(array);
+
             for (let i = 0; i < length; i++) {
 
                 if (transactions.length === 0) {
-                    transactions.push({ source: array[i].from, target: array[i].to, type: "contract" });
+                    transactions.push({ source: array[i].from, target: array[i].to, type: "Contract", txcount: 0 });
 
                 }
 
@@ -79,23 +82,29 @@ class DataCollector extends React.Component {
 
                 }
                 if (found === 0 && array[i].to !== "") {
-                    transactions.push({ source: array[i].from, target: array[i].to, type: "contract" });
+                    transactions.push({ source: array[i].from, target: array[i].to, type: "Contract", txcount: 0 });
                 }
 
             }
 
+            for(let i = 0; i < transactions.length; i++) {
+                let count = 0;
+                for(let j = 0; j < length; j++) {
+                    if(transactions[i].source === array[j].from && transactions[i].target === array[j].to) {
+                        count++;
+                    }
+                }
+                transactions[i].txcount = count;
+            }
+
             counter++;
-            //Array.prototype.push.apply(transactionList, transactions);
-            //transactionList.push(transactions);
+
             console.log(transactions);
 
             let p = Math.round( counter * 100 /  contractList.length * 100 ) / 100;
             document.getElementById("progress").innerHTML = p + "%";
             document.getElementById("progress").style.width = p + "%";
         }
-
-        //console.log("transactions");
-        //console.log(transactions);
 
         return transactions;
     }
