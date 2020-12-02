@@ -18,11 +18,11 @@ class App extends Component {
 
     const maxPage = 100;
     const maxOffset = 1800;
-    const maxStage = 5;
+    const maxDepth = 5;
 
     const pageSelectedValue = 2;
     const offsetSelectedValue = 1;
-    const stageSelectedValue = 1;
+    const depthSelectedValue = 0;
 
     const pageSelectOptions = [];
     for(let i = 1; i <= maxPage; i++) {
@@ -32,9 +32,9 @@ class App extends Component {
     for(let i = 1; i <= maxOffset; i++) {
       offsetSelectOptions.push(<option key={i} value={i}>{i}</option>);
     }
-    const stageSelectOptions = [];
-    for(let i = 1; i <= maxStage; i++) {
-      stageSelectOptions.push(<option key={i} value={i}>{i}</option>);
+    const depthSelectOptions = [];
+    for(let i = 0; i <= maxDepth; i++) {
+      depthSelectOptions.push(<option key={i} value={i}>{i}</option>);
     }
 
     return (
@@ -53,7 +53,7 @@ class App extends Component {
             <b>Offset</b> represents the maximum number of records to return when paginating.
           </p>
           <p id="text">
-            <b>Stage</b> represents how deep the http requests will search into to network.
+            <b>Depth</b> represents how deep the http requests will search into to network.
           </p>
         </div>
         <div id="control">
@@ -65,21 +65,21 @@ class App extends Component {
           <select id="offset_selection" defaultValue={offsetSelectedValue}>
             {offsetSelectOptions}
           </select>
-          <label>Stage:</label>
-          <select id="stage_selection" defaultValue={stageSelectedValue}>
-            {stageSelectOptions}
+          <label>Depth:</label>
+          <select id="depth_selection" defaultValue={depthSelectedValue}>
+            {depthSelectOptions}
           </select>
-          <input type="submit" id="button" value="Start" onClick={() => {
+          <input type="submit" id="button" value="Create Graph" onClick={() => {
 
             let page = document.getElementById("page_selection").value;
             let offset = document.getElementById("offset_selection").value;
-            let stage = document.getElementById("stage_selection").value;
+            let depth = document.getElementById("depth_selection").value;
 
             console.log("page -> " + page);
             console.log("offset -> " + offset);
-            console.log("stage -> " + stage);
+            console.log("depth -> " + depth);
 
-            this.setState({ page: page, offset: offset, stage: stage});
+            this.setState({ page: page, offset: offset, depth: depth});
             
           }} />
         </div>

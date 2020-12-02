@@ -31,12 +31,12 @@ class GraphCreator extends React.Component {
 
 
         let testNodes = [
-            { source: "0x2030bed7b300cef3d4455c8f665d58a4be4e82f5", target: "", type: "contract" },
-            { source: "0xd7bcafc640fc76def22fd2c64e3f53936a3047ca", target: "0xad1ae4665bb880a96faae3576c49bf01040e74e6", type: "contract" },
-            { source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x0215627f70f416c1f9ea89085ac956c00c657447", type: "contract" },
-            { source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x9ba3558b9d6289d8a5fbd76bfa78423174aac7bf", type: "contract" },
-            { source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0xa63cdbc37e9434b11350087279e9c11a4b4ba8fe", type: "contract" },
-            { source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0x97a9f79875087c6e78c446a725aab43c4555acbf", type: "contract" }
+            { source: "0x2030bed7b300cef3d4455c8f665d58a4be4e82f5", target: "", type: "Contract" },
+            { source: "0xd7bcafc640fc76def22fd2c64e3f53936a3047ca", target: "0xad1ae4665bb880a96faae3576c49bf01040e74e6", type: "Contract" },
+            { source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x0215627f70f416c1f9ea89085ac956c00c657447", type: "Contract" },
+            { source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x9ba3558b9d6289d8a5fbd76bfa78423174aac7bf", type: "Contract" },
+            { source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0xa63cdbc37e9434b11350087279e9c11a4b4ba8fe", type: "Contract" },
+            { source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0x97a9f79875087c6e78c446a725aab43c4555acbf", type: "Contract" }
 
             /*{source: "0x2030bed7b300cef3d4455c8f665d58a4be4e82f5", target: ""},
             {source: "0xd7bcafc640fc76def22fd2c64e3f53936a3047ca", target: "0xad1ae4665bb880a96faae3576c49bf01040e74e6"},
@@ -56,7 +56,7 @@ class GraphCreator extends React.Component {
         // compute nodes from links data
         links.forEach(function (link) {
             link.source = nodes[link.source] ||
-                (nodes[link.source] = { source: link.source, count: link.txcount });
+                (nodes[link.source] = { source: link.source });
             link.target = nodes[link.target] ||
                 (nodes[link.target] = { target: link.target, type: link.type });
         });
@@ -114,12 +114,10 @@ class GraphCreator extends React.Component {
                 if (typeof d.source === "undefined") {
                     document.getElementById("address_information").innerHTML = 
                       " <p class='labels'>Type:</p><p class='values'>" + d.type + "</p>"
-                    + " <p class='labels'>TXCount:</p><p class='values'>" + 0 + "</p>"
                     + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a></p>"
                 } else {
                     document.getElementById("address_information").innerHTML = 
                       " <p class='labels'>Type:</p><p class='values'>" + "Account</p>"
-                    + " <p class='labels'>TXCount:</p><p class='values'>" + d.count + "</p>"
                     + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a></p>";
                 }
             })
