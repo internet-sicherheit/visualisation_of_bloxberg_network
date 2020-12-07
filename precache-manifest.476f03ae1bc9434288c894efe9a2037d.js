@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0734521d6d41a6543de0d72b06715e01",
+    "revision": "53460e0116575200678bd4f91246b518",
     "url": "/visualisation_of_bloxberg_network/index.html"
   },
   {
-    "revision": "f392d957d7f7f3adfbe8",
+    "revision": "a373f2b698d2b7036414",
     "url": "/visualisation_of_bloxberg_network/static/css/main.05ee17c2.chunk.css"
   },
   {
-    "revision": "4b0a21b92a9dbaccb63b",
-    "url": "/visualisation_of_bloxberg_network/static/js/2.a0c5af03.chunk.js"
+    "revision": "0e83de46501640b2b2c3",
+    "url": "/visualisation_of_bloxberg_network/static/js/2.bca84925.chunk.js"
   },
   {
     "revision": "65075b20798fa24012a1ad453c78c90d",
-    "url": "/visualisation_of_bloxberg_network/static/js/2.a0c5af03.chunk.js.LICENSE.txt"
+    "url": "/visualisation_of_bloxberg_network/static/js/2.bca84925.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f392d957d7f7f3adfbe8",
-    "url": "/visualisation_of_bloxberg_network/static/js/main.8735753d.chunk.js"
+    "revision": "a373f2b698d2b7036414",
+    "url": "/visualisation_of_bloxberg_network/static/js/main.26561624.chunk.js"
   },
   {
     "revision": "7c0b9efae0f16893e699",
