@@ -1,30 +1,50 @@
-import { transition } from 'd3';
 import React from 'react';
 
 class DataCollector extends React.Component {
 
+    transactionMap = null;
+    tempMap = null;
+
     constructor(props) {
         super(props);
+
+        this.transactionMap = new Map();
+        this.tempMap = new Map();
     }
 
     async getData(page, offset, depth) {
 
+        this.setLoadingbar(0);
+
+        this.transactionMap = new Map();
+        this.tempMap = new Map();
+
         // get contract list
+        console.log("Function - getContractList(page, offsett):");
         let contractList = await this.getContractList(page, offset);
-        console.log("Get contractlist:");
+        console.log("CONTRACTLIST:");
         console.log(contractList);
 
         // get transactions from contract list
-        let transactionList = await this.getTransactionFromContractList(contractList);
-        console.log("Get transactionlist from contractlist:");
-        console.log(transactionList);
+        console.log("Function - getTransactionFromContractList(contractList):");
+        await this.getTransactionFromContractList(contractList);
+        console.log("TRANSACTIONMAP BEFORE DEEEP SEARCH:");
+        console.log(this.transactionMap);
 
-        return transactionList;
+        // search deeper into network
+        console.log("Function - deepSearch(depth, round):");
+        this.tempMap = await this.copyMap(this.transactionMap);
+        if (depth != 0) {
+            for (let round = 1; round <= depth; round++) {
+                await this.deepSearch(depth, round);
+            }
+            console.log("TRANSACTIONMAP AFTER DEEEP SEARCH:");
+            console.log(this.transactionMap);
+        }
 
-        // iterate over accounts
-        //for (let i = 0; i < depth; i++) {
+        document.getElementById("loading_informaiton").innerHTML = "Loading...";
 
-        //}
+        return this.convertMapToArray(this.transactionMap);
     }
 
     async getContractList(page, offset) {
@@ -36,83 +56,166 @@ class DataCollector extends React.Component {
         return contractList.result;
     }
 
-    async getTransactionList(contract) {
+    async getTransactionFromContractList(contractList) {
 
-        let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=' + contract;
-
-        let transactionList = await fetch(url).then(response => response.json());
-
-        console.log("getTransactionList: " + transactionList);
-
-        return null;
-    }
-
-    async getTransactionFromContractList(contractList) {  // 0x97c314818fbe22b4b5d5Ea75E52E726271aFAE3b  
-
-        let transactions = [];
-
-        let counter = 0;
-        for(const contract of contractList) {
+        console.log("Searching for contract transactions:");
+        
+        let counter = 1;
+        for (const contract of contractList) {
             let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
-            //console.log("ContractAddress: " + contract.Address);
             url = url + contract.Address;
 
-            let arrays = await fetch(url).then(contractList => contractList.json());
-            //let transactions = [];
+            let arrays = await fetch(url).then(json => json.json());
 
             let length = Object.keys(arrays.result).length;
             let array = arrays.result;
 
-            console.log("Array");
-            console.log(array);
+            console.log("   Recived " + length + " Transaction entries.");
 
             for (let i = 0; i < length; i++) {
 
-                if (transactions.length === 0) {
-                    transactions.push({ source: array[i].from, target: array[i].to, type: "Contract" });
-
+                if (array[i].from !== "" && array[i].to !== "" && !this.mapContains(this.transactionMap, array[i].from, array[i].to)) {
+                    this.transactionMap.set(
+                        array[i].from + array[i].to,
+                        {
+                            source: array[i].from,
+                            target: array[i].to,
+                            sourceType: ((await this.isVerifiedContract(array[i].from)) ? "Contract" : "Account"),
+                            targetType: "Contract"
+                        }
+                    )
+                    console.log("      Transaction entry number " + (i + 1) + " added.");
                 }
-
-                let found = 0;
-                for (let j = 0; j < transactions.length; j++) {
-
-                    if (transactions[j].source === array[i].from && transactions[j].target === array[i].to) {
-                        found = 1;
-                    }
-
-                }
-                if (found === 0 && array[i].to !== "") {
-                    transactions.push({ source: array[i].from, target: array[i].to, type: "Contract" });
-                }
-
             }
 
-            /* // Count transactions
-            for(let i = 0; i < transactions.length; i++) {
-                let count = 0;
-                for(let j = 0; j < length; j++) {
-                    if(transactions[i].source === array[j].from && transactions[i].target === array[j].to) {
-                        count++;
-                    }
-                }
-                transactions[i].txcount = count;
-            }*/
+            let p = Math.round(counter * 100 / contractList.length * 100) / 100;
+            this.setLoadingbar(p);
 
             counter++;
+        }
+        
+        this.setLoadingbar(0);
+    }
 
-            console.log(transactions);
+    async deepSearch(depth, round) {
 
-            let p = Math.round( counter * 100 /  contractList.length * 100 ) / 100;
-            document.getElementById("progress").innerHTML = p + "%";
-            document.getElementById("progress").style.width = p + "%";
+        let map = this.copyMap(this.tempMap);
+        this.tempMap = new Map();
+
+        let counter = 1;
+
+        console.log("DEEP SEARCH ROUND " + round + "/" + depth);
+
+        for (const entry of map) {
+
+            console.log("   Look up for map entry " + counter + " of " + map.size);
+
+            document.getElementById("loading_informaiton").innerHTML = "Address look up (" + counter + "/" + map.size + ")<br>Depth search level (" + round + "/" + depth + ")";
+
+            let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
+            url = url + entry[1].source;
+
+            console.log("      Searching transactions for address " + entry[1].source + " ...");
+
+            let arrays = await fetch(url).then(json => json.json());
+
+            let length = Object.keys(arrays.result).length;
+            let array = arrays.result;
+
+            console.log("         Recived " + length + " Transaction entries.");
+
+            let addCounter = 1;
+            for (let i = 0; i < length; i++) {
+
+                if (array[i].to !== entry[1].source) {
+                    let temp = array[i].from;
+                    array[i].from = array[i].to;
+                    array[i].to = temp;
+                }
+
+                if (array[i].from !== "" && array[i].to !== "" && !this.mapContains(this.transactionMap, array[i].from, array[i].to)) {
+
+                    this.transactionMap.set(
+                        array[i].from + array[i].to,
+                        {
+                            source: array[i].from,
+                            target: array[i].to,
+                            sourceType: (await this.isVerifiedContract(array[i].from) ? "Contract" : "Account"),
+                            targetType: (await this.isVerifiedContract(array[i].to) ? "Contract" : "Account")
+                        }
+                    );
+                    this.tempMap.set(
+                        array[i].from + array[i].to,
+                        {
+                            source: array[i].from,
+                            target: array[i].to,
+                            sourceType: (await this.isVerifiedContract(array[i].from) ? "Contract" : "Account"),
+                            targetType: (await this.isVerifiedContract(array[i].to) ? "Contract" : "Account")
+                        }
+                    );
+                    console.log("            Transaction entry number " + addCounter + " added.");
+
+                    let p = Math.round(addCounter * 100 / length * 100) / 100;
+                    this.setLoadingbar(p);
+                }
+                addCounter++;
+            }
+            addCounter = 1;
+            counter++;
+
+            this.setLoadingbar(0);
         }
 
-        return transactions;
+        console.log("----- MAP for round " + round + " -----");
+        console.log(map);
+        console.log("---------------------------");
     }
 
-    parseHTTPResponse(response) {
-        console.log("parseHTTPresponse");
+    async isVerifiedContract(address) {
+
+        let isContract = false;
+
+        let url = "https://blockexplorer.bloxberg.org/api/api?module=contract&action=getsourcecode&address=" + address;
+        let result = await fetch(url).then(json => json.json());
+
+        let contractSourceCode = result.result[0].SourceCode;
+
+        if (contractSourceCode) {
+            isContract = true;
+        }
+
+        return isContract;
     }
+
+    convertMapToArray(map) {
+        let array = new Array();
+
+        map.forEach((value, key) => {
+            array.push({ source: value.source, target: value.target, sourceType: value.sourceType, targetType: value.targetType });
+        });
+
+        return array;
+    }
+
+    copyMap(sourceMap) {
+        let map = new Map();
+
+        for (const entry of sourceMap) {
+            map.set(entry[1].source + entry[1].target, { source: entry[1].source, target: entry[1].target, sourceType: entry[1].sourceType, targetType: entry[1].targetType });
+        }
+
+        return map;
+    }
+
+    mapContains(map, x, y) {
+        return map.has(x + y) || map.has(y + x);
+    }
+
+    setLoadingbar(prozent) {
+        document.getElementById("progress").style.width = prozent + "%";
+        document.getElementById("progress").innerHTML = prozent + "%";
+    }
+
 }
 
 export default DataCollector;

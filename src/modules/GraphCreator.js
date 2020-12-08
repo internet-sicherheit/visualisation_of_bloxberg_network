@@ -10,45 +10,27 @@ class GraphCreator extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("Consturctor.")
+        console.log("Consturctor:")
         console.log(props);
         this.responseObject = new DataCollector();
     }
 
     createGraph(promise) {
-        console.log("create graph:");
+        console.log("Function - createGraph():");
 
         let graphBoxHeight = window.innerHeight - document.getElementById("address_information").offsetHeight;
         document.getElementById("graph_box").style.height = graphBoxHeight + "px";
 
         let height = graphBoxHeight;
-        let width = window.innerWidth ;
+        let width = window.innerWidth;
+
+        console.log("PROMISE:");
+        console.log(promise);
 
         let links = promise;
 
-        console.log("links");
+        console.log("LINKS:");
         console.log(links);
-
-
-        let testNodes = [
-            { source: "0x2030bed7b300cef3d4455c8f665d58a4be4e82f5", target: "", type: "Contract" },
-            { source: "0xd7bcafc640fc76def22fd2c64e3f53936a3047ca", target: "0xad1ae4665bb880a96faae3576c49bf01040e74e6", type: "Contract" },
-            { source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x0215627f70f416c1f9ea89085ac956c00c657447", type: "Contract" },
-            { source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x9ba3558b9d6289d8a5fbd76bfa78423174aac7bf", type: "Contract" },
-            { source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0xa63cdbc37e9434b11350087279e9c11a4b4ba8fe", type: "Contract" },
-            { source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0x97a9f79875087c6e78c446a725aab43c4555acbf", type: "Contract" }
-
-            /*{source: "0x2030bed7b300cef3d4455c8f665d58a4be4e82f5", target: ""},
-            {source: "0xd7bcafc640fc76def22fd2c64e3f53936a3047ca", target: "0xad1ae4665bb880a96faae3576c49bf01040e74e6"},
-            {source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x0215627f70f416c1f9ea89085ac956c00c657447"},
-            {source: "0xab59a1ea1ac9af9f77518b9b4ad80942ade35088", target: "0x9ba3558b9d6289d8a5fbd76bfa78423174aac7bf"},
-            {source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0xa63cdbc37e9434b11350087279e9c11a4b4ba8fe"},
-            {source: "0xd748bf41264b906093460923169643f45bdbc32e", target: "0x97a9f79875087c6e78c446a725aab43c4555acbf"} */
-
-
-        ]
-
-        // links = testNodes;
 
         // create empty nodes array
         let nodes = {};
@@ -56,11 +38,12 @@ class GraphCreator extends React.Component {
         // compute nodes from links data
         links.forEach(function (link) {
             link.source = nodes[link.source] ||
-                (nodes[link.source] = { source: link.source });
+                (nodes[link.source] = { nodeAddress: link.source, source: link.source, target: link.target, typeSource: link.sourceType, typeTarget: link.targetType });
             link.target = nodes[link.target] ||
-                (nodes[link.target] = { target: link.target, type: link.type });
+                (nodes[link.target] = { nodeAddress: link.target, source: link.source, target: link.target, typeSource: link.sourceType, typeTarget: link.targetType });
         });
 
+        console.log("NODES:");
         console.log(nodes);
 
         let svgWidth = document.getElementById("address_information").offsetWidth - 2;
@@ -73,7 +56,7 @@ class GraphCreator extends React.Component {
         let svg = d3.select('#container').append('svg')
             .attr('width', svgWidth)
             .attr('height', svgHeight)
-            .style("cursor","move")
+            .style("cursor", "move")
             .call(zoom)
             .append("g");
 
@@ -102,37 +85,65 @@ class GraphCreator extends React.Component {
         let node = svg.selectAll('.node')
             .data(force.nodes()) //add
             .enter().append('circle')
-            .style("cursor","auto")
+            .style("cursor", "auto")
             .style("fill", function (d) {
-                if (d.type === "Contract") {
-                    return "orange";
+                if (d.nodeAddress === d.source) {
+                    if (d.typeSource === "Contract") {
+                        return "orange";
+                    }
+                }
+                if (d.nodeAddress === d.target) {
+                    if (d.typeTarget === "Contract") {
+                        return "orange";
+                    }
                 }
             })
             .attr('class', 'node')
             .attr('r', width * 0.005) //radius of circle
             .on("click", function (d) {
-                if (typeof d.source === "undefined") {
-                    document.getElementById("address_information").innerHTML = 
-                      " <p class='labels'>Type:</p><p class='values'>" + d.type + "</p>"
-                    + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a></p>"
-                } else {
-                    document.getElementById("address_information").innerHTML = 
-                      " <p class='labels'>Type:</p><p class='values'>" + "Account</p>"
-                    + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a></p>";
+                console.log(d);
+                if (d.nodeAddress === d.source) {
+
+                    let type = d.typeSource;
+                    if(type === "Contract") {
+                        type = "verified Contract";
+                    }
+
+                    document.getElementById("address_information").innerHTML =
+                            " <p class='labels'>Type:</p><p class='values'>" + type + "</p>"
+                            + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a></p>";
+                }
+                if(d.nodeAddress === d.target) {
+
+                    let type = d.typeTarget;
+                    if(type === "Contract") {
+                        type = "verified Contract";
+                    }
+
+                    document.getElementById("address_information").innerHTML =
+                            " <p class='labels'>Type:</p><p class='values'>" + type + "</p>"
+                            + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a></p>";
                 }
             })
-            .on("mousedown", function() {
-                d3Attributes();
+            .on("mousedown", function (d) {
+
+                console.log("----- Node Information -----");
+                console.log("nodeAddress: " + d.nodeAddress);
+                console.log("source: " + d.source);
+                console.log("target: " + d.target);
+                console.log("typeSource:   " + d.typeSource);
+                console.log("typeTarget:   " + d.typeTarget);
+
                 this.zoomEnable = false;
-                console.log("ZoomEnabled? " + this.zoomEnable);
+                // console.log("ZoomEnabled? " + this.zoomEnable);
                 d3.select('#container').select('svg').call(d3.behavior.zoom().on("zoom", null));
             })
-            .on("mouseup", function() {
+            .on("mouseup", function () {
                 this.zoomEnable = true;
-                console.log("ZoomEnabled? " + this.zoomEnable);
+                // console.log("ZoomEnabled? " + this.zoomEnable);
                 d3.select('#container').select('svg').call(zoom);
             })
-            .on("focus", function() {
+            .on("focus", function () {
                 d3.select(this).style("border-color", "red"); // fehlerhaft
             });
 
@@ -149,17 +160,19 @@ class GraphCreator extends React.Component {
         }
 
         function updateZoom() {
-
-               svg.attr("transform",
+            svg.attr("transform",
                 "translate(" + d3.event.translate + ")"
                 + " scale(" + d3.event.scale + ")");
         }
 
-        function d3Attributes() {
-            console.log(document.getElementsByTagName("g")[0].getAttribute("transform"));
-        }
-    
-        console.log("graph drawed.");
+        console.log("Graph drawed.");
+    }
+
+    timeStap() {
+        return Math.floor(Date.now());
+    }
+    calculationTime(startTime, endTime) {
+        console.log("Graph created in " + (endTime - startTime) / 1000 + " seconds.");
     }
 
     showLoader() {
@@ -196,10 +209,16 @@ class GraphCreator extends React.Component {
 
     componentDidMount() {
         console.log("Component did mount.");
+
+        let startTime = this.timeStap();
+
         this.showLoader();
-        this.responseObject.getData(this.props.page, this.props.offset, this.props.stage).then((promise) => {
+        this.responseObject.getData(this.props.page, this.props.offset, this.props.depth).then((promise) => {
             this.hideLoader();
             this.createGraph(promise);
+
+            let endTime = this.timeStap();
+            this.calculationTime(startTime, endTime);
 
             this.scrollAnimation();
             this.widthResizeListener();
@@ -208,10 +227,16 @@ class GraphCreator extends React.Component {
 
     componentWillUpdate(nextProps) {
         console.log("Component will update.");
+
+        let startTime = this.timeStap();
+
         this.showLoader();
-        this.responseObject.getData(nextProps.page, nextProps.offset, nextProps.stage).then((promise) => {
+        this.responseObject.getData(nextProps.page, nextProps.offset, nextProps.depth).then((promise) => {
             this.hideLoader();
             this.createGraph(promise);
+
+            let endTime = this.timeStap();
+            this.calculationTime(startTime, endTime);
 
             this.scrollAnimation();
             this.widthResizeListener();

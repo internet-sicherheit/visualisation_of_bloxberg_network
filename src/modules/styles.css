@@ -196,9 +196,22 @@ select:focus {
     stroke-width: 2px;
 }
 
-#container {
-
-}
+#node_account {
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background: lightblue;
+  }
+  #node_contract {
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    background: orange;
+  }
 
 svg {
     background-color: white;

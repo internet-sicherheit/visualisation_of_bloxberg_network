@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './App.css';
 import './modules/styles.css';
 import GraphCreator from './modules/GraphCreator';
@@ -9,12 +8,12 @@ class App extends Component {
   state = {
     page: 0,
     offset: 0,
-    stage: 0
+    depth: 0
   };
 
   render() {
 
-    let graph = (this.state.page !== 0) ? <GraphCreator page={this.state.page} offset={this.state.offset} stage={this.state.stage} /> : null;
+    let graph = (this.state.page !== 0) ? <GraphCreator page={this.state.page} offset={this.state.offset} depth={this.state.depth} /> : null;
 
     const maxPage = 100;
     const maxOffset = 1800;
@@ -86,7 +85,7 @@ class App extends Component {
         <div id="loader" style={{visibility: "visable"}}>
           <div id="progressbar">
             <div id="progress"></div>
-            <p>Loading...</p>
+            <p id="loading_informaiton">Loading...</p>
           </div>
         </div>
         <div id="address_information">
