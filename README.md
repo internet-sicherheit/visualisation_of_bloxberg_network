@@ -10,15 +10,15 @@ Offset represents the maximum number of records to return when paginating.
 ### depth
 Depth represents how deep the http requests will search into to network.
 
-### Softwaredevelopment
+## Software development
 The UML diagrams below shows the processes on Visualisation of Bloxberg-Network website.
 
 ![UseCase diagram](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/UseCaseBloxberg.png)
 
-![Activity diagram](https://)
+![Activity diagram](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/ActivityBloxberg.png)
 
-### Graph examples
+## Graph examples
 
-![Graph example 1](https://)
+![Graph example 1](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/DiagramSample1.png)
 
-![Graph example 2](https://)
+![Graph example 2](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/DiagramSample2.png)
