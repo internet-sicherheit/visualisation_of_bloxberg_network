@@ -39,7 +39,7 @@ class App extends Component {
     return (
       <div className="App">
         <div id="banner">
-          <h1 className="title">Visualisation of Bloxsberg-Network</h1>
+          <h1 className="title">Visualisation of Bloxberg-Network</h1>
         </div>
         <div id="site_informaiton">
           <p>This website will produce a force directed d3 graph that will visualizise the Bloxberg Network by using the <a href="https://blockexplorer.bloxberg.org/api_docs">Bloxberg RPC API</a>.</p>
