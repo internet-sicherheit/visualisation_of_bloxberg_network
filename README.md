@@ -13,12 +13,16 @@ Depth represents how deep the http requests will search into to network.
 ## Software development
 The UML diagrams below shows the processes on Visualisation of Bloxberg-Network website.
 
+### UseCase diagram
 ![UseCase diagram](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/UseCaseBloxberg.png)
 
+### Activity diagram
 ![Activity diagram](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/ActivityBloxberg.png)
 
 ## Graph examples
 
+### Graph exsample with page=2 offset=1 depth=5
 ![Graph example 1](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/DiagramSample1.png)
 
+### Graph exsample with page=2 offset=1800 depth=0
 ![Graph example 2](https://github.com/internet-sicherheit/visualisation_of_bloxberg_network/blob/data_model/src/modules/docs/DiagramSample2.png)
