@@ -1,4 +1,5 @@
 import React from 'react';
+import web3 from 'web3';
 
 class DataCollector extends React.Component {
 
@@ -140,8 +141,8 @@ class DataCollector extends React.Component {
                         {
                             source: array[i].from,
                             target: array[i].to,
-                            sourceType: (await this.isVerifiedContract(array[i].from) ? "Contract" : "Account"),
-                            targetType: (await this.isVerifiedContract(array[i].to) ? "Contract" : "Account")
+                            sourceType: (await this.isContract(array[i].from) ? "Contract" : "Account"),
+                            targetType: (await this.isContract(array[i].to) ? "Contract" : "Account")
                         }
                     );
                     this.tempMap.set(
@@ -149,8 +150,8 @@ class DataCollector extends React.Component {
                         {
                             source: array[i].from,
                             target: array[i].to,
-                            sourceType: (await this.isVerifiedContract(array[i].from) ? "Contract" : "Account"),
-                            targetType: (await this.isVerifiedContract(array[i].to) ? "Contract" : "Account")
+                            sourceType: (await this.isContract(array[i].from) ? "Contract" : "Account"),
+                            targetType: (await this.isContract(array[i].to) ? "Contract" : "Account")
                         }
                     );
                     console.log("            Transaction entry number " + addCounter + " added.");
@@ -171,17 +172,16 @@ class DataCollector extends React.Component {
         console.log("---------------------------");
     }
 
-    async isVerifiedContract(address) {
+    async isContract(address) {
 
-        let isContract = false;
+        let isContract = true;
 
-        let url = "https://blockexplorer.bloxberg.org/api/api?module=contract&action=getsourcecode&address=" + address;
-        let result = await fetch(url).then(json => json.json());
+        const Web3 = require('web3');
+        const web3 = new Web3(new Web3.providers.HttpProvider('https://core.bloxberg.org/'));
+        let result = await web3.eth.getCode(address);
 
-        let contractSourceCode = result.result[0].SourceCode;
-
-        if (contractSourceCode) {
-            isContract = true;
+        if(result === "0x") {
+            isContract = false;
         }
 
         return isContract;

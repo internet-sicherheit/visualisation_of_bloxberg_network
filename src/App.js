@@ -42,7 +42,7 @@ class App extends Component {
           <h1 className="title">Visualisation of Bloxberg-Network</h1>
         </div>
         <div id="site_informaiton">
-          <p>This website will produce a force directed d3 graph that will visualizise the Bloxberg Network by using the <a href="https://blockexplorer.bloxberg.org/api_docs">Bloxberg RPC API</a>.</p>
+          <p>This website will produce a force directed d3 graph that will visualizise the Bloxberg Network by using the <a href="https://blockexplorer.bloxberg.org/api_docs" target="_blank">Bloxberg RPC API</a> and the <a href="https://web3js.readthedocs.io/en/v1.3.0/" target="_blank">Web3</a> framework for JavaScript.</p>
         </div>
         <div id="values_informaiton">
           <p id="text">
