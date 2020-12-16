@@ -1,5 +1,4 @@
 import React from 'react';
-import web3 from 'web3';
 
 class DataCollector extends React.Component {
 
