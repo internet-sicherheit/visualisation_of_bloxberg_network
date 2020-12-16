@@ -103,25 +103,13 @@ class GraphCreator extends React.Component {
             .on("click", function (d) {
                 console.log(d);
                 if (d.nodeAddress === d.source) {
-
-                    let type = d.typeSource;
-                    if(type === "Contract") {
-                        type = "verified Contract";
-                    }
-
                     document.getElementById("address_information").innerHTML =
-                            " <p class='labels'>Type:</p><p class='values'>" + type + "</p>"
+                            " <p class='labels'>Type:</p><p class='values'>" + d.typeSource + "</p>"
                             + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a></p>";
                 }
                 if(d.nodeAddress === d.target) {
-
-                    let type = d.typeTarget;
-                    if(type === "Contract") {
-                        type = "verified Contract";
-                    }
-
                     document.getElementById("address_information").innerHTML =
-                            " <p class='labels'>Type:</p><p class='values'>" + type + "</p>"
+                            " <p class='labels'>Type:</p><p class='values'>" + d.typeTarget + "</p>"
                             + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a></p>";
                 }
             })

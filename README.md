@@ -1,5 +1,5 @@
 # Visualisation of Bloxberg-Network
-This website will produce a force directed d3 graph that will visualizise the Bloxberg Network by using the [Bloxberg RPC API](https://blockexplorer.bloxberg.org/api_docs) and the [Web3](https://web3js.readthedocs.io/en/v1.3.0/) framework for JavaScript.
+This website will produce a force directed d3 graph, that will visualizise the Bloxberg Network by using the [Bloxberg RPC API](https://blockexplorer.bloxberg.org/api_docs) and the [Web3](https://web3js.readthedocs.io/en/v1.3.0/) framework for JavaScript.
 
 ### page
 Page represents the page number to be used for pagination.

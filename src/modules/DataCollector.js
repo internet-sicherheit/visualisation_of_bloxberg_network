@@ -81,7 +81,7 @@ class DataCollector extends React.Component {
                         {
                             source: array[i].from,
                             target: array[i].to,
-                            sourceType: ((await this.isVerifiedContract(array[i].from)) ? "Contract" : "Account"),
+                            sourceType: ((await this.isContract(array[i].from)) ? "Contract" : "Account"),
                             targetType: "Contract"
                         }
                     )
