@@ -1,108 +1,221 @@
 import React from 'react';
+import web3 from 'web3';
 
 class DataCollector extends React.Component {
 
+    transactionMap = null;
+    tempMap = null;
+
     constructor(props) {
         super(props);
+
+        this.transactionMap = new Map();
+        this.tempMap = new Map();
     }
 
-    async getData(address, mode) {
+    async getData(page, offset, depth) {
 
-        const Http = new XMLHttpRequest();
-        const url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=' + address;  
-                                                                                                                                                   
-        let transactions = await fetch(url).then(response => response.json());
+        this.setLoadingbar(0);
 
-        let result = null;
+        this.transactionMap = new Map();
+        this.tempMap = new Map();
 
-        switch(mode) {
-            case "contract":
-                result = this.parseHTTPResponseForContract(transactions.result);
-                break;
-            case "account":
-                result = this.parseHTTPResponseForNetwork(transactions.result);
-                break;
+        // get contract list
+        console.log("Function - getContractList(page, offsett):");
+        let contractList = await this.getContractList(page, offset);
+        console.log("CONTRACTLIST:");
+        console.log(contractList);
+
+        // get transactions from contract list
+        console.log("Function - getTransactionFromContractList(contractList):");
+        await this.getTransactionFromContractList(contractList);
+        console.log("TRANSACTIONMAP BEFORE DEEEP SEARCH:");
+        console.log(this.transactionMap);
+
+        // search deeper into network
+        console.log("Function - deepSearch(depth, round):");
+        this.tempMap = await this.copyMap(this.transactionMap);
+        if (depth != 0) {
+            for (let round = 1; round <= depth; round++) {
+                await this.deepSearch(depth, round);
+            }
+            console.log("TRANSACTIONMAP AFTER DEEEP SEARCH:");
+            console.log(this.transactionMap);
         }
 
-        return result;
+        document.getElementById("loading_informaiton").innerHTML = "Loading...";
+
+        return this.convertMapToArray(this.transactionMap);
     }
 
-    parseHTTPResponseForContract(response) {
+    async getContractList(page, offset) {
 
-        let transactions = [];
+        const url = 'https://blockexplorer.bloxberg.org/api/api?module=contract&action=listcontracts&page=' + page + '&offset=' + offset;
 
-        let length = Object.keys(response).length;
-        let array = response;
+        let contractList = await fetch(url).then(response => response.json());
+
+        return contractList.result;
+    }
+
+    async getTransactionFromContractList(contractList) {
+
+        console.log("Searching for contract transactions:");
         
-        /*
-        for(let i = 0; i < length; i++) {
-            transactions.push({ source: array[i].from, target: array[i].to });
-        } */
+        let counter = 1;
+        for (const contract of contractList) {
+            let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
+            url = url + contract.Address;
 
-        for (let i = 0; i < length; i++) {
+            let arrays = await fetch(url).then(json => json.json());
 
-            if (transactions.length === 0) {
-                transactions.push({ source: array[i].from, target: array[i].to });
+            let length = Object.keys(arrays.result).length;
+            let array = arrays.result;
 
+            console.log("   Recived " + length + " Transaction entries.");
+
+            for (let i = 0; i < length; i++) {
+
+                if (array[i].from !== "" && array[i].to !== "" && !this.mapContains(this.transactionMap, array[i].from, array[i].to)) {
+                    this.transactionMap.set(
+                        array[i].from + array[i].to,
+                        {
+                            source: array[i].from,
+                            target: array[i].to,
+                            sourceType: ((await this.isContract(array[i].from)) ? "Contract" : "Account"),
+                            targetType: "Contract"
+                        }
+                    )
+                    console.log("      Transaction entry number " + (i + 1) + " added.");
+                }
             }
 
-            let found = 0;
-            for (let j = 0; j < transactions.length; j++) {
+            let p = Math.round(counter * 100 / contractList.length * 100) / 100;
+            this.setLoadingbar(p);
 
-                if (transactions[j].source === array[i].from && transactions[j].target === array[i].to) {
-                    found = 1;
+            counter++;
+        }
+        
+        this.setLoadingbar(0);
+    }
+
+    async deepSearch(depth, round) {
+
+        let map = this.copyMap(this.tempMap);
+        this.tempMap = new Map();
+
+        let counter = 1;
+
+        console.log("DEEP SEARCH ROUND " + round + "/" + depth);
+
+        for (const entry of map) {
+
+            console.log("   Look up for map entry " + counter + " of " + map.size);
+
+            document.getElementById("loading_informaiton").innerHTML = "Address look up (" + counter + "/" + map.size + ")<br>Depth search level (" + round + "/" + depth + ")";
+
+            let url = 'https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=';
+            url = url + entry[1].source;
+
+            console.log("      Searching transactions for address " + entry[1].source + " ...");
+
+            let arrays = await fetch(url).then(json => json.json());
+
+            let length = Object.keys(arrays.result).length;
+            let array = arrays.result;
+
+            console.log("         Recived " + length + " Transaction entries.");
+
+            let addCounter = 1;
+            for (let i = 0; i < length; i++) {
+
+                if (array[i].to !== entry[1].source) {
+                    let temp = array[i].from;
+                    array[i].from = array[i].to;
+                    array[i].to = temp;
                 }
 
-            }
-            if (found === 0 && array[i].to !== "") {
-                transactions.push({ source: array[i].from, target: array[i].to });
-            }
+                if (array[i].from !== "" && array[i].to !== "" && !this.mapContains(this.transactionMap, array[i].from, array[i].to)) {
 
-        }
-        /*
-                    for(let i = 0; i < this.transactions.length; i++) {
-                        let count = 0;
-                        for(let j = 0; j < length; j++) {
-                            if(this.transactions[i].source === array[j].from && this.transactions[i].target === array[j].to) {
-                                count++;
-                            }
+                    this.transactionMap.set(
+                        array[i].from + array[i].to,
+                        {
+                            source: array[i].from,
+                            target: array[i].to,
+                            sourceType: (await this.isContract(array[i].from) ? "Contract" : "Account"),
+                            targetType: (await this.isContract(array[i].to) ? "Contract" : "Account")
                         }
-                        this.transactions[i].count = count;
-                    }*/
+                    );
+                    this.tempMap.set(
+                        array[i].from + array[i].to,
+                        {
+                            source: array[i].from,
+                            target: array[i].to,
+                            sourceType: (await this.isContract(array[i].from) ? "Contract" : "Account"),
+                            targetType: (await this.isContract(array[i].to) ? "Contract" : "Account")
+                        }
+                    );
+                    console.log("            Transaction entry number " + addCounter + " added.");
 
-        return transactions;
+                    let p = Math.round(addCounter * 100 / length * 100) / 100;
+                    this.setLoadingbar(p);
+                }
+                addCounter++;
+            }
+            addCounter = 1;
+            counter++;
+
+            this.setLoadingbar(0);
+        }
+
+        console.log("----- MAP for round " + round + " -----");
+        console.log(map);
+        console.log("---------------------------");
     }
 
-    parseHTTPResponseForNetwork(response) {  // 0x97c314818fbe22b4b5d5Ea75E52E726271aFAE3b  
-        console.log("network vis");
+    async isContract(address) {
 
-        let page = 2;
-        let offset = 80;
+        let isContract = true;
 
-        const Http = new XMLHttpRequest();
-        const url = 'https://blockexplorer.bloxberg.org/api/api?module=contract&action=listcontracts&page=' + page + '&offset=' + offset;  
-                                                                                                                                                   
-        let contracts = fetch(url).then(response => response.json());
+        const Web3 = require('web3');
+        const web3 = new Web3(new Web3.providers.HttpProvider('https://core.bloxberg.org/'));
+        let result = await web3.eth.getCode(address);
 
+        if(result === "0x") {
+            isContract = false;
+        }
 
-        contracts.then((promise) => {
+        return isContract;
+    }
 
-            let list = promise.result;
-            let contractList = [];
+    convertMapToArray(map) {
+        let array = new Array();
 
-            list.forEach(function(contract) {
-                contractList.push({contractAddress: contract.Address});
-            });
-
-            console.log("contractList");
-            console.log(contractList);
-
-
-        }).catch((err) => {
-            console.error(err);
+        map.forEach((value, key) => {
+            array.push({ source: value.source, target: value.target, sourceType: value.sourceType, targetType: value.targetType });
         });
-        
+
+        return array;
     }
+
+    copyMap(sourceMap) {
+        let map = new Map();
+
+        for (const entry of sourceMap) {
+            map.set(entry[1].source + entry[1].target, { source: entry[1].source, target: entry[1].target, sourceType: entry[1].sourceType, targetType: entry[1].targetType });
+        }
+
+        return map;
+    }
+
+    mapContains(map, x, y) {
+        return map.has(x + y) || map.has(y + x);
+    }
+
+    setLoadingbar(prozent) {
+        document.getElementById("progress").style.width = prozent + "%";
+        document.getElementById("progress").innerHTML = prozent + "%";
+    }
+
 }
 
 export default DataCollector;
