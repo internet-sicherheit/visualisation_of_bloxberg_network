@@ -37,7 +37,30 @@
   }
 }
 
+#navigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 7vh;
+  background-color: rgb(73, 79, 82);
+}
 
+#nav-links {
+  width: 150%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+}
+.link:hover {
+  color: lightgrey;
+  text-decoration: none;
+}
 
 .labels {
   margin-right: 1%;

@@ -1,0 +1,10 @@
+#searchbar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#address_input {
+    width: 50%;
+}
