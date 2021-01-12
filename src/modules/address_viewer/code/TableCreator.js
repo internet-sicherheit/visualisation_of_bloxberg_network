@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './styles.css';
 import '../../../bootstrap.min.css';
+import DataFetcher from './DataFetcher';
 
 class TableCreator extends Component {
     
@@ -28,9 +29,6 @@ class TableCreator extends Component {
     componentDidUpdate() {
 
     }
-
-    
-
 
   render() {
 

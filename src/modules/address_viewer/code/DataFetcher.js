@@ -12,12 +12,12 @@ class DataFetcher extends React.Component {
 
     async fetchData(address) {
 
-        await getTransactionList(address);
+        let some = await this.getTransactions(address);
 
     }
 
-    async getTransactionList(address) {
-
+    async getTransactions(address) {
+        return null;
     }
 
 }
