@@ -11,7 +11,7 @@ class AddressViewer extends Component {
 
   render() {
 
-    let table = (this.state.address !== "") ? <TableCreator address={this.state.address} /> : null;
+    let table = (this.state.address !== null) ? <TableCreator address={this.state.address} /> : null;
 
     return (
       <div className="AddressViewer">

@@ -19,7 +19,7 @@ class TableCreator extends Component {
     }
 
     componentDidMount() {
-
+        this.responseObject.fetchData(this.props.address);
     }
 
     componentWillUpdate() {
@@ -34,6 +34,7 @@ class TableCreator extends Component {
 
     return (
         <div className="TableCreator">
+            TableCreator
         </div>
     );
   }
