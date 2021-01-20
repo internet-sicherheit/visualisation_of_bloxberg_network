@@ -17,7 +17,7 @@ class AddressViewer extends Component {
       <div className="AddressViewer">
 
         <div id="banner">
-          <h1 className="title">Adderss Viewer</h1>
+          <h1 className="title">Address Viewer</h1>
         </div>
 
         <div id="searchbar">
@@ -29,11 +29,14 @@ class AddressViewer extends Component {
 
                   let address = document.getElementById("input").value;
 
+                  let regex = "^0x[a-fA-F0-9]{40}$";
                   if(address != "") {
-                    console.log("address -> " + address);
-
-                    this.setState({ address: address });
-
+                    if(address.match(regex)) {
+                      console.log("address -> " + address);
+                      this.setState({ address: address });
+                    } else {
+                      window.alert("Invalid address.");
+                    }
                   } else {
                     window.alert("Inputfield is empty.");
                   }

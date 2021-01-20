@@ -8,3 +8,7 @@
 #address_input {
     width: 50%;
 }
+
+tr:hover {
+    background-color: lightgrey;
+}

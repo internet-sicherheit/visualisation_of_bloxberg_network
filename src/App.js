@@ -14,7 +14,6 @@ class App extends Component {
         <div className="App">
 
         <div id="navigation">
-            <nav>
               <ul id="nav-links">
                 <Link to="/AddressViewer" class="link">
                   <li>AddressViewer</li>
@@ -23,7 +22,7 @@ class App extends Component {
                   <li>VBN</li>
                 </Link>
               </ul>
-            </nav>
+
           </div>
 
           <Switch>
