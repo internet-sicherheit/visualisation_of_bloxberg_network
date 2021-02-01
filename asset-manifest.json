@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/visualisation_of_bloxberg_network/static/css/main.87f96b18.chunk.css",
-    "main.js": "/visualisation_of_bloxberg_network/static/js/main.4c44c7d0.chunk.js",
-    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.4c44c7d0.chunk.js.map",
+    "main.css": "/visualisation_of_bloxberg_network/static/css/main.1e745310.chunk.css",
+    "main.js": "/visualisation_of_bloxberg_network/static/js/main.dc6209c4.chunk.js",
+    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.dc6209c4.chunk.js.map",
     "runtime-main.js": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js",
     "runtime-main.js.map": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js.map",
     "static/js/2.3f2a1c93.chunk.js": "/visualisation_of_bloxberg_network/static/js/2.3f2a1c93.chunk.js",
     "static/js/2.3f2a1c93.chunk.js.map": "/visualisation_of_bloxberg_network/static/js/2.3f2a1c93.chunk.js.map",
     "index.html": "/visualisation_of_bloxberg_network/index.html",
-    "precache-manifest.ba5144a85a55d35d2fcf674de8705af8.js": "/visualisation_of_bloxberg_network/precache-manifest.ba5144a85a55d35d2fcf674de8705af8.js",
+    "precache-manifest.7404c363ae807b9e13eca2268bb43427.js": "/visualisation_of_bloxberg_network/precache-manifest.7404c363ae807b9e13eca2268bb43427.js",
     "service-worker.js": "/visualisation_of_bloxberg_network/service-worker.js",
-    "static/css/main.87f96b18.chunk.css.map": "/visualisation_of_bloxberg_network/static/css/main.87f96b18.chunk.css.map",
+    "static/css/main.1e745310.chunk.css.map": "/visualisation_of_bloxberg_network/static/css/main.1e745310.chunk.css.map",
     "static/js/2.3f2a1c93.chunk.js.LICENSE.txt": "/visualisation_of_bloxberg_network/static/js/2.3f2a1c93.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d013d7be.js",
     "static/js/2.3f2a1c93.chunk.js",
-    "static/css/main.87f96b18.chunk.css",
-    "static/js/main.4c44c7d0.chunk.js"
+    "static/css/main.1e745310.chunk.css",
+    "static/js/main.dc6209c4.chunk.js"
   ]
 }
