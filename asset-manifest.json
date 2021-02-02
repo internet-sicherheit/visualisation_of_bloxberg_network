@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/visualisation_of_bloxberg_network/static/css/main.fd413fab.chunk.css",
-    "main.js": "/visualisation_of_bloxberg_network/static/js/main.033fdfe6.chunk.js",
-    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.033fdfe6.chunk.js.map",
+    "main.js": "/visualisation_of_bloxberg_network/static/js/main.4acf4aee.chunk.js",
+    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.4acf4aee.chunk.js.map",
     "runtime-main.js": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js",
     "runtime-main.js.map": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js.map",
-    "static/js/2.f980fc13.chunk.js": "/visualisation_of_bloxberg_network/static/js/2.f980fc13.chunk.js",
-    "static/js/2.f980fc13.chunk.js.map": "/visualisation_of_bloxberg_network/static/js/2.f980fc13.chunk.js.map",
+    "static/js/2.7c1f6ae4.chunk.js": "/visualisation_of_bloxberg_network/static/js/2.7c1f6ae4.chunk.js",
+    "static/js/2.7c1f6ae4.chunk.js.map": "/visualisation_of_bloxberg_network/static/js/2.7c1f6ae4.chunk.js.map",
     "index.html": "/visualisation_of_bloxberg_network/index.html",
-    "precache-manifest.63fde0143e17fb03c08056642f174250.js": "/visualisation_of_bloxberg_network/precache-manifest.63fde0143e17fb03c08056642f174250.js",
+    "precache-manifest.977ffdbe1e2d8628268e898d3c1c961c.js": "/visualisation_of_bloxberg_network/precache-manifest.977ffdbe1e2d8628268e898d3c1c961c.js",
     "service-worker.js": "/visualisation_of_bloxberg_network/service-worker.js",
     "static/css/main.fd413fab.chunk.css.map": "/visualisation_of_bloxberg_network/static/css/main.fd413fab.chunk.css.map",
-    "static/js/2.f980fc13.chunk.js.LICENSE.txt": "/visualisation_of_bloxberg_network/static/js/2.f980fc13.chunk.js.LICENSE.txt"
+    "static/js/2.7c1f6ae4.chunk.js.LICENSE.txt": "/visualisation_of_bloxberg_network/static/js/2.7c1f6ae4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d013d7be.js",
-    "static/js/2.f980fc13.chunk.js",
+    "static/js/2.7c1f6ae4.chunk.js",
     "static/css/main.fd413fab.chunk.css",
-    "static/js/main.033fdfe6.chunk.js"
+    "static/js/main.4acf4aee.chunk.js"
   ]
 }
