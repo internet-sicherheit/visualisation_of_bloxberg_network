@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/visualisation_of_bloxberg_network/static/css/main.93b59f0e.chunk.css",
-    "main.js": "/visualisation_of_bloxberg_network/static/js/main.d522754f.chunk.js",
-    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.d522754f.chunk.js.map",
+    "main.js": "/visualisation_of_bloxberg_network/static/js/main.bb942865.chunk.js",
+    "main.js.map": "/visualisation_of_bloxberg_network/static/js/main.bb942865.chunk.js.map",
     "runtime-main.js": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js",
     "runtime-main.js.map": "/visualisation_of_bloxberg_network/static/js/runtime-main.d013d7be.js.map",
     "static/js/2.6615007a.chunk.js": "/visualisation_of_bloxberg_network/static/js/2.6615007a.chunk.js",
     "static/js/2.6615007a.chunk.js.map": "/visualisation_of_bloxberg_network/static/js/2.6615007a.chunk.js.map",
     "index.html": "/visualisation_of_bloxberg_network/index.html",
-    "precache-manifest.293095a70cfeb99626c3eabf4b7e702b.js": "/visualisation_of_bloxberg_network/precache-manifest.293095a70cfeb99626c3eabf4b7e702b.js",
+    "precache-manifest.6cdb5a96848ffd426333aa3a369fdc63.js": "/visualisation_of_bloxberg_network/precache-manifest.6cdb5a96848ffd426333aa3a369fdc63.js",
     "service-worker.js": "/visualisation_of_bloxberg_network/service-worker.js",
     "static/css/main.93b59f0e.chunk.css.map": "/visualisation_of_bloxberg_network/static/css/main.93b59f0e.chunk.css.map",
     "static/js/2.6615007a.chunk.js.LICENSE.txt": "/visualisation_of_bloxberg_network/static/js/2.6615007a.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.d013d7be.js",
     "static/js/2.6615007a.chunk.js",
     "static/css/main.93b59f0e.chunk.css",
-    "static/js/main.d522754f.chunk.js"
+    "static/js/main.bb942865.chunk.js"
   ]
 }

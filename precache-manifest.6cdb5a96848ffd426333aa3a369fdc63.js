@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3734a9d8d5b95782ddc484209966a464",
+    "revision": "295125450a99f7912636846816ed20ab",
     "url": "/visualisation_of_bloxberg_network/index.html"
   },
   {
-    "revision": "4a30d912842c46e1a282",
+    "revision": "724e1af7eb162928446e",
     "url": "/visualisation_of_bloxberg_network/static/css/main.93b59f0e.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/visualisation_of_bloxberg_network/static/js/2.6615007a.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "4a30d912842c46e1a282",
-    "url": "/visualisation_of_bloxberg_network/static/js/main.d522754f.chunk.js"
+    "revision": "724e1af7eb162928446e",
+    "url": "/visualisation_of_bloxberg_network/static/js/main.bb942865.chunk.js"
   },
   {
     "revision": "7c0b9efae0f16893e699",
