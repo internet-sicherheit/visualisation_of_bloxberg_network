@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, HashRouter, Switch, Route, Link } from 'react-router-dom'; // maybe switch HashRouter to Router
 import './App.css';
 import AddressViewer from './modules/address_viewer/code/AddressViewer';
 import VBN from './modules/vbn/code/VBN';
@@ -7,18 +7,17 @@ import VBN from './modules/vbn/code/VBN';
 class App extends Component {
 
   render() {
-
     return (
-      <Router>
+      <HashRouter basename='/visualisation_of_bloxberg_network/'>
 
         <div className="App">
 
         <div id="navigation">
               <ul id="nav-links">
-                <Link to="/AddressViewer" class="link">
+                <Link to="/AddressViewer" className="link">
                   <li>AddressViewer</li>
                 </Link>
-                <Link to="/VBN" class="link">
+                <Link to="/VBN" className="link">
                   <li>VBN</li>
                 </Link>
               </ul>
@@ -32,7 +31,7 @@ class App extends Component {
 
         </div>
 
-      </Router>
+      </HashRouter>
     );
   }
 

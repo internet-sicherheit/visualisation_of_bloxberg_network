@@ -18,6 +18,9 @@ class GraphCreator extends Component {
     createGraph(promise) {
         console.log("Function - createGraph():");
 
+        //let url_website = 'https://internet-sicherheit.github.io/visualisation_of_bloxberg_network/#/visualisation_of_bloxberg_network/AddressViewer?address=';
+        let url_website = 'http://localhost:3000/visualisation_of_bloxberg_network/#/visualisation_of_bloxberg_network/AddressViewer?address=';
+
         let graphBoxHeight = window.innerHeight - document.getElementById("address_information").offsetHeight;
         document.getElementById("graph_box").style.height = graphBoxHeight + "px";
 
@@ -105,12 +108,12 @@ class GraphCreator extends Component {
                 if (d.nodeAddress === d.source) {
                     document.getElementById("address_information").innerHTML =
                             " <p class='labels'>Type:</p><p class='values'>" + d.typeSource + "</p>"
-                            + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.source + "' target='_blank'>" + d.source + "</a></p>";
+                            + "<p class='labels'>Address:</p><p class='values'><a href='"+ url_website + d.source + "' target='_blank'>" + d.source + "</a></p>";
                 }
                 if(d.nodeAddress === d.target) {
                     document.getElementById("address_information").innerHTML =
                             " <p class='labels'>Type:</p><p class='values'>" + d.typeTarget + "</p>"
-                            + "<p class='labels'>Address:</p><p class='values'><a href='https://blockexplorer.bloxberg.org/address/" + d.target + "' target='_blank'>" + d.target + "</a></p>";
+                            + "<p class='labels'>Address:</p><p class='values'><a href='"+ url_website + d.target + "' target='_blank'>" + d.target + "</a></p>";
                 }
             })
             .on("mousedown", function (d) {

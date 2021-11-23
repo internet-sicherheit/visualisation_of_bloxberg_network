@@ -34,7 +34,7 @@ class DataCollector extends React.Component {
         // search deeper into network
         console.log("Function - deepSearch(depth, round):");
         this.tempMap = await this.copyMap(this.transactionMap);
-        if (depth != 0) {
+        if (depth !== 0) {
             for (let round = 1; round <= depth; round++) {
                 await this.deepSearch(depth, round);
             }
@@ -187,7 +187,7 @@ class DataCollector extends React.Component {
     }
 
     convertMapToArray(map) {
-        let array = new Array();
+        let array = [];
 
         map.forEach((value, key) => {
             array.push({ source: value.source, target: value.target, sourceType: value.sourceType, targetType: value.targetType });

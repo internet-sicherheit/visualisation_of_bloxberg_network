@@ -1,12 +1,13 @@
 import React from 'react';
 import AddressManager from './model/AddressManager';
+import Transaction from './model/Transaction';
 
 class DataFetcher extends React.Component {
 
     Web3Url = null;
     URLTransactionList = null;
     URLTransactionInfo = null;
-    addressManager = null;
+
     addressLookUpMap = null;
 
     constructor(props) {
@@ -16,13 +17,11 @@ class DataFetcher extends React.Component {
         this.URLTransactionList = "https://blockexplorer.bloxberg.org/api/api?module=account&action=txlist&address=";
         this.URLTransactionInfo = "https://blockexplorer.bloxberg.org/api/api?module=transaction&action=gettxinfo&txhash=";
         this.URLContractSourceCode = "https://blockexplorer.bloxberg.org/api/api?module=contract&action=getsourcecode&address=";
-        this.addressManager = null;
+
         this.addressLookUpMap = new Map();
     }
 
     async fetchData(address) {
-
-        console.log(this.convertTime(1559567750));
 
         /* console.log("getAddressName");
         console.log(await this.getAccountName("0xE5a9654C7e190701016EBf18206020bf16D8Beab"));
@@ -52,39 +51,21 @@ class DataFetcher extends React.Component {
         let contractName = await this.getContractName(address);
         let accountName = await this.getAccountName(address);
 
-        console.log(isContract);
-        console.log(isVerified);
-        console.log(contractName);
-        console.log(accountName);
-        console.log(address);
+        console.log("isContract: " + isContract);
+        console.log("isVerified: " + isVerified);
+        console.log("contractName: " + contractName);
+        console.log("accountName: " + accountName);
+        console.log("address: " + address);
 
-        if (isContract) {
-            addressManager = new AddressManager("Contract", contractName, address, isVerified);
+        if (isContract === true) {
+            addressManager = new AddressManager(address, (contractName == null) ? address : contractName, "Contract", isVerified ? "verified" : "not verified");
             this.addressLookUpMap.set(address, contractName);
         } else {
-            addressManager = new AddressManager("Account", accountName, address, null);
+            addressManager = new AddressManager(address, (accountName == null) ? address : accountName, "Account", (accountName == null) ? "not verified" : "verified by validator");
             this.addressLookUpMap.set(address, accountName);
         }
 
         return addressManager;
-    }
-
-    async getAccountName(address) {
-
-        let response = await fetch("https://blockexplorer.bloxberg.org/address/" + address + "/transactions");
-        let httpText = await response.text();
-
-        let regex = '<strong class="mr-4 mb-2 text-dark" title="[a-zA-Z0-9. ]*">';
-
-        let result = httpText.match(regex);
-
-        let accountName = null;
-
-        if (result !== null) {
-            accountName = result[0].substring(43, result[0].length - 2);
-        }
-
-        return accountName;
     }
 
     async getTransactions(adderss) {
@@ -125,20 +106,36 @@ class DataFetcher extends React.Component {
         let length = Object.keys(transactions.result).length;
         let resultArray = transactions.result;
 
-        /*
-        console.log("RESULTARRAY:");
-        console.log(resultArray);
-        */
-
         for (let i = 0; i < length; i++) {
 
-            let from = await this.lookUpName(resultArray[i].from);
-            let to = await this.lookUpName(resultArray[i].to);
+            let transactionHash = resultArray[i].hash;
 
-            console.log("from: " + from + ", to: " + to);
+            let senderAddress = resultArray[i].from;
+            let senderName = await this.lookUpName(senderAddress);
 
-            this.addressManager.transactionList.push({ from: from, to: to, time: this.convertTime(parseInt(resultArray[i].timeStamp)), input: resultArray[i].input });
+            let receiverAddress = resultArray[i].to;
+            let receiverName = await this.lookUpName(receiverAddress);
+
+            let timeStamp = resultArray[i].timeStamp;
+            let input = resultArray[i].input;
+
+
+            //console.log("sender: " + senderName + ", receiver: " + receiverName);
+
+            this.addressManager.transactionMap.set(i, new Transaction(transactionHash, senderAddress, senderName, receiverAddress, receiverName, timeStamp, input));
+
+            let percent = Math.round((i + 1) * 100 / length * 100) / 100;
+            document.getElementById("p").innerHTML = percent + "%";
+            document.getElementById("p").style.width=percent+"%";
+            document.getElementById("loader_info").innerHTML = "Receiving transaction (" + (i + 1) + "/" + length + ")";
+            
         }
+
+        //console.log(this.addressManager.getTransactionSummaryMap());
+        //console.log(this.addressManager.getTransactionsForAddress(["0xaa84378fa41da83a9b6523ba46e45a664fbebfc8","0xe659bc6a60ba2091c08f7df623ba6057349b6980"]));
+
+
+
     }
 
     async isContract(address) {
@@ -179,35 +176,35 @@ class DataFetcher extends React.Component {
         return (typeof contractName !== "undefined") ? contractName : null;
     }
 
-    convertTime(timeStamp) {
-        let date = new Date(timeStamp * 1000);
+    async getAccountName(address) {
 
-        let day = (date.getDate() < 10) ? "0" + date.getDate() : date.getDate();
-        let month = (date.getMonth() + 1 < 10) ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-        let year = date.getFullYear();
+        let response = await fetch("https://blockexplorer.bloxberg.org/address/" + address + "/transactions");
+        let httpText = await response.text();
 
-        let hours = (date.getHours() < 10) ? "0" + date.getHours() : date.getHours();
-        let minutes = (date.getMinutes() < 10) ? "0" + date.getMinutes() : date.getMinutes();
-        let seconds = (date.getSeconds() < 10) ? "0" + date.getSeconds() : date.getSeconds();
+        let regex = '<strong class="mr-4 mb-2 text-dark" title="[a-zA-Z0-9. ]*">';
 
-        let timeString = day + "." + month + "." + year + ", " + hours + ":" + minutes + ":" + seconds;
+        let result = httpText.match(regex);
 
-        //return new Date(timeStamp * 1000).toLocaleString();
+        let accountName = null;
 
-        return timeString;
+        if (result !== null) {
+            accountName = result[0].substring(43, result[0].length - 2);
+        }
+
+        return accountName;
     }
-
+    /*
     test() {
 
-        /*
-        ISCC Base58 encoding: 0x00f71201ad85f5a189102b2a76b05434d95a204f077f99ee368d213022628ba1e4fa5686
-        → Resolves to: 
-        Meta-ID: CCLYJLQWKidp1
-        Content-ID: CT8ZSFJGhmUcM
-        Data-ID: CDEZgdCTV5Tum
-        Instance-ID: CR6kNU6eVKkLM
-        Tophash: 22628ba1e4fa56864075e614b5930086 944d530ec775adfcc5191ed8e4b38cc6
-        */
+        
+        // ISCC Base58 encoding: 0x00f71201ad85f5a189102b2a76b05434d95a204f077f99ee368d213022628ba1e4fa5686
+        // → Resolves to: 
+        // Meta-ID: CCLYJLQWKidp1
+        // Content-ID: CT8ZSFJGhmUcM
+        // Data-ID: CDEZgdCTV5Tum
+        // Instance-ID: CR6kNU6eVKkLM
+        // Tophash: 22628ba1e4fa56864075e614b5930086 944d530ec775adfcc5191ed8e4b38cc6
+        
 
         let data = "0x989cda35000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000002400f71201ad85f5a189102b2a76b05434d95a204f077f99ee368d213022628ba1e4fa568600000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002022628ba1e4fa56864075e614b5930086944d530ec775adfcc5191ed8e4b38cc6";
 
@@ -288,7 +285,7 @@ class DataFetcher extends React.Component {
             return ('0' + (byte & 0xFF).toString(16)).slice(-2);
         }).join('');
     }
-
+    */
 }
 
 export default DataFetcher;

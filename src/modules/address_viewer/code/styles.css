@@ -1,14 +1,107 @@
-#searchbar {
+:root {
+    --grey: rgb(73, 79, 82);
+    --white: #FFFFFF;
+    --background: rgb(239, 238, 241);
+    --lightgrey: lightgrey;
+ }
+
+ div.AddressViewer {
+    background-color: rgb(239, 238, 241);
+  }
+
+ .black_label {
+     color: black;
+ }
+
+.window {
+    width: 80%;
+
+    margin-top: 1.5%;
+    margin-left: 10%;
+    padding: 2%;
+    
+    background-color: var(--white);
+    border-radius: .5rem;
+}
+
+#search_table {
     width: 100%;
+}
+#search_table td {
+    padding: 0.5%;
+    text-align: left;
+}
+#address_input{
+    width: 100%;
+}
+
+#pb {
+    width: 100%;
+    background-color: rgb(173, 173, 173);
+}
+#p {
+    width: 0%;
+    background-color: rgb(128, 128, 128);
+    color: var(--white);
+    font-weight: 600;
+    text-align: center;
+}
+
+#loader_window {
+    display: none;
+}
+
+#table_window {
+    display: none;
+}
+
+.info {
+    display: none;
+}
+
+#links {
+    margin-bottom: 2%;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
 }
 
-#address_input {
-    width: 50%;
+.btn.btn-outline-secondary {
+    margin-right: 1%;
 }
 
-tr:hover {
-    background-color: lightgrey;
+.checkBox {
+    width: 20px;
+    height: 20px;
+
+    background-color: black;
+}
+
+.page_control {
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+/*.page_control td {
+    text-align: center; 
+}
+*/
+
+#entryCount {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+#paging {
+    text-align: center;
+}
+
+#placeholder {
+    visibility: hidden;
+}
+
+.btn.btn-outline-secondary.pageButton:hover {
+    background-color: white;
+    color: grey;
+    cursor: default;
 }

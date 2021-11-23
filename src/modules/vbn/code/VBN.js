@@ -10,7 +10,7 @@ class VBN extends Component {
       depth: 0
     };
   
-    render() {
+    render() { 
   
       let graph = (this.state.page !== 0) ? <GraphCreator page={this.state.page} offset={this.state.offset} depth={this.state.depth} /> : null;
   
@@ -42,7 +42,7 @@ class VBN extends Component {
           </div>
           <div id="site_informaiton">
             <p>This website will produce a force directed d3 graph, that will visualizise the Bloxberg Network<br/>
-            by using the <a href="https://blockexplorer.bloxberg.org/api_docs" target="_blank">Bloxberg RPC API</a> and the <a href="https://web3js.readthedocs.io/en/v1.3.0/" target="_blank">Web3</a> framework for JavaScript.</p>
+            by using the <a href="https://blockexplorer.bloxberg.org/api_docs" target="_blank" rel="noopener noreferrer">Bloxberg RPC API</a> and the <a href="https://web3js.readthedocs.io/en/v1.3.0/" target="_blank" rel="noopener noreferrer">Web3</a> framework for JavaScript.</p>
           </div>
           <div id="values_informaiton">
             <p id="text">

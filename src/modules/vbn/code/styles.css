@@ -15,20 +15,20 @@ body {
     height:100%;
     width: 100%;
 
-    background-color: white;
+    background-color: rgb(239, 238, 241);
 }
 
 /* Main structure */
 #banner {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
 }
 
 #control {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
 }
 
 #loader {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
 
     height: 100px;
 
@@ -41,11 +41,11 @@ body {
 }
 
 #site_informaiton {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
 }
 
 #values_informaiton {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
 
     display: flex;
     text-align: left;
@@ -73,7 +73,8 @@ body {
 }
 
 #graph_box {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
+      
 }
 
 /* Control elements */
@@ -85,7 +86,7 @@ label {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 select {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
     color: gray;
 
     width: 90px;
@@ -108,7 +109,7 @@ select:focus {
 }
 
 #button {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
     color: gray;
     
     width: 135px;
@@ -214,7 +215,7 @@ select:focus {
   }
 
 svg {
-    background-color: white;
+    background-color: rgb(239, 238, 241);
 
     margin-left: 20px;
     margin-right: 20px;
